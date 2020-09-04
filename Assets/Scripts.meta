@@ -1,5 +1,9 @@
 fileFormatVersion: 2
+<<<<<<< refs/remotes/origin/main
 guid: e011c2be219995044986c5c9f998d46d
+=======
+guid: abbe4cc37e3016549a115b3a3ca94526
+>>>>>>> Added Player and Camera movement
 folderAsset: yes
 DefaultImporter:
   externalObjects: {}
