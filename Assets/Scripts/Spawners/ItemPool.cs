@@ -5,9 +5,8 @@ using UnityEngine;
 public class ItemPool : MonoBehaviour {
     [SerializeField]
     GameObject[] itemPrefabs;
-
     Queue<GameObject> availableObjects = new Queue<GameObject>();
-    int maxObjectInstance = 100;
+    int maxObjectInstance = 20;
     int maxInstancesPerGrowth = 10;
 
     public static ItemPool Instance { get; private set; }
@@ -18,13 +17,10 @@ public class ItemPool : MonoBehaviour {
     }
 
     void GrowPool() {
-        for (int i = 0; i <= maxInstancesPerGrowth; i++) {
-            if (availableObjects.Count < maxObjectInstance) {
-                var instance = Instantiate(itemPrefabs[Random.Range(0, itemPrefabs.Length)]);
-                AddToPool(instance);
-            } else {
-                Debug.Log("[MAX AVAILABLE INSTANCE REACH]");
-            }
+        for (int i = 0; i < maxInstancesPerGrowth; i++) {
+            Debug.Log("[AVAILABLE OBJECTS] " + availableObjects.Count.ToString());
+            var instance = Instantiate(itemPrefabs[Random.Range(0, itemPrefabs.Length)]);
+            AddToPool(instance);
         }
     }
 
@@ -38,13 +34,8 @@ public class ItemPool : MonoBehaviour {
             GrowPool();
         }
 
-        if (availableObjects.Count > 0) {
-            GameObject instance = availableObjects.Dequeue();
-            instance.gameObject.SetActive(true);
-            return instance;    
-        }
-        return null;    
+        GameObject instance = availableObjects.Dequeue();
+        instance.gameObject.SetActive(true);
+        return instance;
     }
-
-
 }

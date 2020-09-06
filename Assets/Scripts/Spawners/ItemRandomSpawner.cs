@@ -14,19 +14,13 @@ public class ItemRandomSpawner : MonoBehaviour {
     [SerializeField]
     float maxZSpawnPosition = 10f;
     [SerializeField]
-    int maxSpawnedItems = 12;
-    
-    [SerializeField]
-    float delay = 0.5f;
+    float spawnDelay = 2f;
     float lastSpawnTime;
     void Update() {
         
-        // if (maxSpawnedItems > 0) {
-        if(Time.time - lastSpawnTime > delay) {
+        if(Time.time - lastSpawnTime > spawnDelay) {
             SpawnItem();
-            // maxSpawnedItems -= 1;
         }
-        // }
     }
 
     Vector3 GetNewPosition() {
@@ -40,6 +34,8 @@ public class ItemRandomSpawner : MonoBehaviour {
     void SpawnItem() {
         lastSpawnTime = Time.time;
         GameObject instance = ItemPool.Instance.GetFromPool();
-        instance.transform.position = GetNewPosition();
+        if (instance != null) {
+            instance.transform.position = GetNewPosition();
+        }
     }
 }

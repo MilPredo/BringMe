@@ -157,8 +157,7 @@ MonoBehaviour:
   maxXSpawnPosition: 20
   minZSpawnPosition: -20
   maxZSpawnPosition: 20
-  maxSpawnedItems: 12
-  delay: 0.5
+  spawnDelay: 2
 --- !u!4 &316659391
 Transform:
   m_ObjectHideFlags: 0
