@@ -7,13 +7,13 @@ public class PlayerMovement : MonoBehaviour {
     float speed = 5.0f;
 
     // Update is called once per frame
-    void Update() {
+    void LateUpdate() {
         Move();
     }
 
     void Move() {
-        Vector3 direction = new Vector3(Input.GetAxis("Horizontal"), 0, Input.GetAxis("Vertical"));
-        direction.Normalize();
-        transform.Translate(direction * Time.deltaTime * speed);
+        Vector3 direction = new Vector3(Input.GetAxis("Horizontal"), 0f, Input.GetAxis("Vertical"));
+        direction = Vector3.ClampMagnitude(direction, 1f);
+        transform.Translate(direction * Time.deltaTime * speed, Space.World);
     }
 }
