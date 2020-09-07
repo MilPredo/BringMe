@@ -6,7 +6,6 @@ public class ItemPool : MonoBehaviour {
     [SerializeField]
     GameObject[] itemPrefabs;
     Queue<GameObject> availableObjects = new Queue<GameObject>();
-    int maxObjectInstance = 20;
     int maxInstancesPerGrowth = 10;
 
     public static ItemPool Instance { get; private set; }

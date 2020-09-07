@@ -6,20 +6,21 @@ public class ItemRandomSpawner : MonoBehaviour {
     [SerializeField]
     List<GameObject> spawnedItems = new List<GameObject>();
     [SerializeField]
-    float minXSpawnPosition = -10f;
+    int maxSpawnedItem = 25;
     [SerializeField]
-    float maxXSpawnPosition = 10f;
+    float minXSpawnPosition = -225f;
     [SerializeField]
-    float minZSpawnPosition = -10f;
+    float maxXSpawnPosition = 225f;
     [SerializeField]
-    float maxZSpawnPosition = 10f;
+    float minZSpawnPosition = -225f;
     [SerializeField]
-    float spawnDelay = 2f;
-    float lastSpawnTime;
-    void Update() {
-        
-        if(Time.time - lastSpawnTime > spawnDelay) {
+    float maxZSpawnPosition = 225f;
+    [SerializeField]
+
+    void Start() {
+        while (maxSpawnedItem > 0) {
             SpawnItem();
+            maxSpawnedItem--;
         }
     }
 
@@ -32,7 +33,6 @@ public class ItemRandomSpawner : MonoBehaviour {
     }
 
     void SpawnItem() {
-        lastSpawnTime = Time.time;
         GameObject instance = ItemPool.Instance.GetFromPool();
         if (instance != null) {
             instance.transform.position = GetNewPosition();
