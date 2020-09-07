@@ -10,31 +10,31 @@ public class ItemPool : MonoBehaviour {
 
     public static ItemPool Instance { get; private set; }
 
-    void Awake() {
+    void Awake () {
         Instance = this;
-        GrowPool();
+        GrowPool ();
     }
 
-    void GrowPool() {
+    void GrowPool () {
         for (int i = 0; i < maxInstancesPerGrowth; i++) {
-            Debug.Log("[AVAILABLE OBJECTS] " + availableObjects.Count.ToString());
-            var instance = Instantiate(itemPrefabs[Random.Range(0, itemPrefabs.Length)]);
-            AddToPool(instance);
+            Debug.Log ("[AVAILABLE OBJECTS] " + availableObjects.Count.ToString ());
+            var instance = Instantiate (itemPrefabs[Random.Range (0, itemPrefabs.Length)]);
+            AddToPool (instance);
         }
     }
 
-    public void AddToPool(GameObject instance) {
-        instance.gameObject.SetActive(false);
-        availableObjects.Enqueue(instance);
+    public void AddToPool (GameObject instance) {
+        instance.gameObject.SetActive (false);
+        availableObjects.Enqueue (instance);
     }
 
-    public GameObject GetFromPool() {
+    public GameObject GetFromPool () {
         if (availableObjects.Count == 0) {
-            GrowPool();
+            GrowPool ();
         }
 
-        GameObject instance = availableObjects.Dequeue();
-        instance.gameObject.SetActive(true);
+        GameObject instance = availableObjects.Dequeue ();
+        instance.gameObject.SetActive (true);
         return instance;
     }
 }
