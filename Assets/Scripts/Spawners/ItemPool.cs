@@ -17,7 +17,6 @@ public class ItemPool : MonoBehaviour {
 
     void GrowPool () {
         for (int i = 0; i < maxInstancesPerGrowth; i++) {
-            Debug.Log ("[AVAILABLE OBJECTS] " + availableObjects.Count.ToString ());
             var instance = Instantiate (itemPrefabs[Random.Range (0, itemPrefabs.Length)]);
             AddToPool (instance);
         }
