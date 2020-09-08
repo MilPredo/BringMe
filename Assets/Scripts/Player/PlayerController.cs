@@ -9,7 +9,7 @@ public class PlayerController : MonoBehaviour {
     void LateUpdate() {
         Move();
         LookAtMouse();
-        // Debug.Log(PrimitiveType.Plane);
+        Debug.Log(PrimitiveType.Plane);
     }
 
     void Move() {
