@@ -17,9 +17,11 @@ public class ItemRandomSpawner : MonoBehaviour {
     float maxZSpawnPosition = 225f;
     [SerializeField]
 
+    // tracks initial position of items
     List<Vector3> spawnPositions = new List<Vector3>();
     
     void Start() {
+        // spawn specified(maxSpawnedItems) at the start of the game
         while (maxSpawnedItem > 0) {
             SpawnItem();
             maxSpawnedItem--;
