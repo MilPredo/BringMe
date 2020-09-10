@@ -80,15 +80,4 @@ public class ObjectSpawner : MonoBehaviour {
         maxSpawnedItem += 1;
         // ItemPool.Instance.AddToPool(instance);
     }
-
-    public void UpdateItemPosition(GameObject instance) {
-        int index = 0;
-        foreach (GameObject item in spawnedItems) {
-            if (instance == item) {
-                Debug.Log(item.gameObject.transform.position);
-                break;
-            }
-            index++;
-        }
-    }
 }
