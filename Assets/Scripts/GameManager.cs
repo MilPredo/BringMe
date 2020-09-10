@@ -1,8 +1,13 @@
 ﻿using UnityEngine;
+using System.Collections;
 
 public class GameManager : MonoBehaviour {
-    private float maxRountTime = 5f;
-    private float preparationTime = 5f;
+    private float maxRoundTime = 5f;
+    private float preparationTime = 2f;
+    private int maxRounds = 3;
+    private float currentRoundTime;
+    private float roundEndDelay = 5f;
+    private int currentRound = 0;
 
     [SerializeField] private GameObject player;
     [SerializeField] private GameObject startGameMenu;
@@ -13,37 +18,64 @@ public class GameManager : MonoBehaviour {
     private TMPro.TextMeshProUGUI timerText;
 
     private void Start() {
-        Debug.Log("Game start in 15 seconds");
-        StopGame();
-        // find countdown child of `startGameMenu`
-        countdownText = FindFromFrame(startGameMenu, "Countdown");
-
-        // find ui timer
-        timerText = FindFromFrame(ui, "Timer");
+        // set `currentRoundTime` to `maxRoundTime`
+        // currentRoundTime = maxRoundTime;
+        // // find timer `GameObjects`
+        // countdownText = FindFromFrame(startGameMenu, "Countdown");
+        // timerText = FindFromFrame(ui, "Timer");
+        // // start preparation
+        // StartCoroutine(PreparationTime());
     }
 
     void Update() {
-        if ( preparationTime > 0 ) {
-            preparationTime -= Time.deltaTime;
-            SetTime(countdownText, preparationTime);
-
-            if ( preparationTime < 0) {
-                // after 15 seconds enabled players
-                StartGame();
-            }   
-        } else {
-            // after 1 minute disable players
-            if ( maxRountTime > 0 ) {
-                maxRountTime -= Time.deltaTime;
-                SetTime(timerText, maxRountTime);
+        // // reduce `currentRoundTime` by 1
+        // currentRoundTime -= Time.deltaTime;
+        // // if `currentRoundTime` less than zero
+        // if ( currentRoundTime < 0 ) {
+        //     // round ended
+        //     // set `setCurrentRoundTime` to maxRoundTime
+        //     currentRoundTime = maxRoundTime;
+        //     // increase `currentRound` by 1
+        //     currentRound += 1;
+        //     // disable `player`
+        //     player.SetActive(false);
+        //     // disable `ui`
+        //     ui.SetActive(false);
+        //     // if `currentRound` greater than `maxRounds`
+        //     if ( currentRound > maxRounds ) {
+        //         // enable `gameEndResultMenu`
+        //         Debug.Log("Game End Results");
+        //         // disable `ui`
+        //         ui.SetActive(false);
+        //     // endif
+        //     } else {
+        //     // else
+        //         // enable `roundEndMenu`
+        //         roundEndMenu.SetActive(true);
+        //         // wait for 5 seconds
                 
-                if ( maxRountTime < 0 ) {
-                    // show gameover menu
-                    StopGame();
-                    Debug.Log("Game Over!");
-                }
-            }
+        //     // endelse
+        //     }
+        // // endif
+        // }
+    }
+
+    private IEnumerator PreparationTime() {
+        // disable gameplay
+        player.SetActive(false);
+
+        // wait for `preparationTime` before starting the game
+        while (preparationTime > 0) {
+            yield return new WaitForSeconds(1f);
+            SetTime(countdownText, preparationTime);
+            preparationTime -= 1f;
         }
+        // start game
+        // enable ui and player
+        player.SetActive(true);
+        ui.SetActive(true);
+        // disable `startGameMenu`
+        startGameMenu.SetActive(false);
     }
 
     private TMPro.TextMeshProUGUI FindFromFrame(GameObject source, string target) {
@@ -67,14 +99,21 @@ public class GameManager : MonoBehaviour {
     private void StopGame() {
         // disabled players
         player.SetActive(false);
-        // show start menu
-        if ( maxRountTime < 0 ) {
+        // hide `ui`
+        ui.SetActive(false);
+       
+        if ( currentRoundTime < 0 ) {
+             // round ended
             roundEndMenu.SetActive(true);
+            float counter = 2f;
+            while ( counter > 0 ) {
+                counter -= Time.deltaTime;
+            }
+            StartGame();
         } else {
+             // show `startGameMenu`
             startGameMenu.SetActive(true);
         }
-    
-        ui.SetActive(false);
     }
 
     private void StartGame() {
@@ -82,6 +121,18 @@ public class GameManager : MonoBehaviour {
         player.SetActive(true);
         // hide start menu
         startGameMenu.SetActive(false);
+        // hide ui
         ui.SetActive(true);
+        // hide round end menu
+        roundEndMenu.SetActive(false);
+        // increase `currentRound` by 1
+        currentRound += 1;
+        // set `currentRoundTime` to `maxRoundTime`
+        currentRoundTime = maxRoundTime;
+        if ( currentRound <= maxRounds ) {
+            // show `gameResultMenu`
+            Debug.Log("Showing End Result");
+            StopGame();
+        }
     }
 }

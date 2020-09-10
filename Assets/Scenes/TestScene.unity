@@ -136,7 +136,7 @@ GameObject:
   - component: {fileID: 25908931}
   - component: {fileID: 25908930}
   m_Layer: 5
-  m_Name: RoundEndMenu
+  m_Name: EndGameResultMenu
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -414,7 +414,7 @@ GameObject:
   - component: {fileID: 600291599}
   - component: {fileID: 600291598}
   m_Layer: 5
-  m_Name: GameOver
+  m_Name: Message
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -436,7 +436,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 0, y: 1}
-  m_AnchoredPosition: {x: 400, y: -32}
+  m_AnchoredPosition: {x: 400, y: -115.12018}
   m_SizeDelta: {x: 800, y: 64}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &600291598
@@ -459,7 +459,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: ROUND OVER
+  m_text: THIS SHOULD SHOW GAME RESULT
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 5302535af1044152a457ed104f1f4b91, type: 2}
   m_sharedMaterial: {fileID: 2164040, guid: 5302535af1044152a457ed104f1f4b91, type: 2}
@@ -951,6 +951,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1200786479}
   - component: {fileID: 1200786480}
+  - component: {fileID: 1200786481}
   m_Layer: 0
   m_Name: GameManager
   m_TagString: Untagged
@@ -979,7 +980,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1200786478}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 175a86c5b9e67944d98af11f4b9c8143, type: 3}
   m_Name: 
@@ -988,6 +989,26 @@ MonoBehaviour:
   startGameMenu: {fileID: 2086049347}
   roundEndMenu: {fileID: 25908929}
   ui: {fileID: 1584525508}
+--- !u!114 &1200786481
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1200786478}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 77f5b081b53d63b4386a88773b7c2087, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  maxRound: 3
+  maxRoundTime: 5
+  maxPrepareTime: 5
+  player: {fileID: 1758985131}
+  ui: {fileID: 1584525508}
+  prepareRoundMenu: {fileID: 2086049347}
+  roundEndMenu: {fileID: 25908929}
+  endGameResultMenu: {fileID: 25908929}
 --- !u!1 &1269774642
 GameObject:
   m_ObjectHideFlags: 0
@@ -1105,7 +1126,7 @@ MonoBehaviour:
     m_Right: 0
     m_Top: 0
     m_Bottom: 0
-  m_ChildAlignment: 1
+  m_ChildAlignment: 4
   m_Spacing: 0
   m_ChildForceExpandWidth: 1
   m_ChildForceExpandHeight: 1
@@ -1600,7 +1621,7 @@ GameObject:
   - component: {fileID: 1922257771}
   - component: {fileID: 1922257770}
   m_Layer: 5
-  m_Name: Starting
+  m_Name: Message
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1780,7 +1801,7 @@ GameObject:
   - component: {fileID: 2086049349}
   - component: {fileID: 2086049348}
   m_Layer: 5
-  m_Name: StartGameMenu
+  m_Name: PrepareRoundMenu
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
