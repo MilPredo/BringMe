@@ -55,12 +55,12 @@ class ItemObject { //the item object itself
 
 
 public class ItemManager : MonoBehaviour {
-    List<ItemProperties> itemType = new List<ItemProperties>();
-    List<ItemObject> itemObjects = new List<ItemObject>();
-    public ItemManager() {
-        itemType.Add(new ItemProperties("cube"));
-        itemType.Add(new ItemProperties("capsule"));
-    }
+    //    List<ItemProperties> itemType = new List<ItemProperties>();
+    //    List<ItemObject> itemObjects = new List<ItemObject>();
+    // public ItemManager() {
+    //     itemType.Add(new ItemProperties("cube"));
+    //     itemType.Add(new ItemProperties("capsule"));
+    // }
     public void Spawn(string model, Vector3 position) {
         // ItemProperties
         // objToSpawn = new GameObject("Cool GameObject made from Code");

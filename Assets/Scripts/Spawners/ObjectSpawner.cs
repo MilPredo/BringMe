@@ -23,7 +23,7 @@ public class ObjectSpawner : MonoBehaviour {
     };
 
     public static ObjectSpawner Instance { get; private set; }
-    
+
     void Awake() {
         Instance = this;
         itemManager = new ItemManager();
@@ -43,7 +43,7 @@ public class ObjectSpawner : MonoBehaviour {
         float z = Random.Range(minZSpawnPosition, maxZSpawnPosition);
         Vector3 spawnPosition = new Vector3(x, y, z);
         // check if position is already occupied
-        foreach(GameObject item in spawnedItems) {
+        foreach (GameObject item in spawnedItems) {
             Vector3 position = item.transform.position;
             // position is occupied
             if (spawnPosition == position) {
@@ -64,7 +64,7 @@ public class ObjectSpawner : MonoBehaviour {
         // }
 
         // using item manager to spawn items
-        string model = itemModels[ Random.Range(0, itemModels.Length)];
+        string model = itemModels[Random.Range(0, itemModels.Length)];
         Vector3 position = GetNewPosition();
         itemManager.Spawn(model, position);
     }

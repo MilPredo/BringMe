@@ -9,18 +9,18 @@ using UnityEngine;
 /// </summary>
 
 abstract class Item : ScriptableObject { //Base class for all items in the game (Bring me items, powerups, etc.)
-    public string itemName;
-    public string model;
-    public Sprite icon;
+    public string itemName = "";
+    public string model = "";
+    public Sprite icon = null;
     public abstract void Initialize(GameObject obj); //override then call this function to spawn
 }
 
 abstract class BringItem : Item { //additional properties unique to Bring me items.
-    public int weight;
+    public int weight = 0;
 }
 
 abstract class Powerup : Item { //additional properties unique to powerup
-    public int cooldown;
+    public int cooldown = 0;
     public abstract void Trigger();
 }
 
