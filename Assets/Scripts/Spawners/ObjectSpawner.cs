@@ -3,45 +3,48 @@ using UnityEngine;
 
 public class ObjectSpawner : MonoBehaviour {
 
-    [SerializeField]
-    List<GameObject> spawnedItems = new List<GameObject>();
-    [SerializeField]
-    int maxSpawnedItem = 25;
-    [SerializeField]
-    float minXSpawnPosition = -225f;
-    [SerializeField]
-    float maxXSpawnPosition = 225f;
-    [SerializeField]
-    float minZSpawnPosition = -225f;
-    [SerializeField]
-    float maxZSpawnPosition = 225f;
+    [SerializeField] private List<GameObject> spawnedItems = new List<GameObject>();  // keeps track of all spawned items
+    
+    [SerializeField] private int maxSpawnedItem = 25;  // maximum number of items that can be spawned
+    
+    [SerializeField] private float minXSpawnPosition = -225f;  // min x spawn boundary
+    
+    [SerializeField] private float maxXSpawnPosition = 225f;  // max x spawn boundary
+    
+    [SerializeField] private float minZSpawnPosition = -225f;  // min z spawn boundary
+    
+    [SerializeField] private float maxZSpawnPosition = 225f;  // max z spawn boundary
 
-    ItemManager itemManager;
+    private ItemManager itemManager;  // instance of `ItemManager`
 
-    string[] itemModels = new string[] {
+    // list of all possible items that can be spawned
+    private string[] itemModels = new string[] {
         "cube", "capsule", "cylinder", "plane", "quad", "sphere"
     };
 
     public static ObjectSpawner Instance { get; private set; }
 
-    void Awake() {
-        Instance = this;
-        itemManager = new ItemManager();
+    private void Awake() {
+        Instance = this;  // create a variable containing an instance of this object
+        itemManager = new ItemManager();  // create an instance of the `ItemManager()`
     }
 
-    void Start() {
+    private void Start() {
         // spawn specified(maxSpawnedItems) at the start of the game
         while (maxSpawnedItem > 0) {
             SpawnItem();
+            // reduced maxSpawnedItem for item spawned
             maxSpawnedItem--;
         }
     }
 
     Vector3 GetNewPosition() {
+        // randomize location of the spawned item
         float x = Random.Range(minXSpawnPosition, maxXSpawnPosition);
         float y = Random.Range(1, 2);
         float z = Random.Range(minZSpawnPosition, maxZSpawnPosition);
         Vector3 spawnPosition = new Vector3(x, y, z);
+
         // check if position is already occupied
         foreach (GameObject item in spawnedItems) {
             Vector3 position = item.transform.position;
@@ -70,8 +73,12 @@ public class ObjectSpawner : MonoBehaviour {
     }
 
     public void DispawnItem(GameObject instance) {
+        // dispawned items gets removed from the list of spawnedItems
         spawnedItems.Remove(instance);
-        ItemPool.Instance.AddToPool(instance);
+        // destroy object
+        Destroy(instance);
+        maxSpawnedItem += 1;
+        // ItemPool.Instance.AddToPool(instance);
     }
 
     public void UpdateItemPosition(GameObject instance) {
