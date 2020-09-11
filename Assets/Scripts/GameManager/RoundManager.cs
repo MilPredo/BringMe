@@ -74,6 +74,7 @@ public class RoundManager : MonoBehaviour {
         // countdown from `time`
         prepareMessageText.text = "STARTING IN";
         prepareRoundMenu.SetActive(true);
+        player.SetActive(false);
         ui.SetActive(false);
         while (time > 0) {
             // update countdown timer text
