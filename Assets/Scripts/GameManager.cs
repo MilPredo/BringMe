@@ -2,11 +2,11 @@
 using System.Collections;
 
 public class GameManager : MonoBehaviour {
-    private float maxRoundTime = 5f;
+    private float maxRoundTime = 60f;
     private float preparationTime = 2f;
     private int maxRounds = 3;
     private float currentRoundTime;
-    private float roundEndDelay = 5f;
+    private float roundEndDelay = 60f;
     private int currentRound = 0;
 
     [SerializeField] private GameObject player;
@@ -53,7 +53,7 @@ public class GameManager : MonoBehaviour {
         //         // enable `roundEndMenu`
         //         roundEndMenu.SetActive(true);
         //         // wait for 5 seconds
-                
+
         //     // endelse
         //     }
         // // endif
@@ -79,10 +79,10 @@ public class GameManager : MonoBehaviour {
     }
 
     private TMPro.TextMeshProUGUI FindFromFrame(GameObject source, string target) {
-        foreach ( Transform child in source.transform ) {
+        foreach (Transform child in source.transform) {
             if (child.gameObject.name == "Frame") {
-                foreach ( Transform frameChild in child.gameObject.transform ) {
-                    if ( frameChild.gameObject.name == target ) {
+                foreach (Transform frameChild in child.gameObject.transform) {
+                    if (frameChild.gameObject.name == target) {
                         return frameChild.gameObject.GetComponent<TMPro.TextMeshProUGUI>();
                     }
                 }
@@ -101,17 +101,17 @@ public class GameManager : MonoBehaviour {
         player.SetActive(false);
         // hide `ui`
         ui.SetActive(false);
-       
-        if ( currentRoundTime < 0 ) {
-             // round ended
+
+        if (currentRoundTime < 0) {
+            // round ended
             roundEndMenu.SetActive(true);
             float counter = 2f;
-            while ( counter > 0 ) {
+            while (counter > 0) {
                 counter -= Time.deltaTime;
             }
             StartGame();
         } else {
-             // show `startGameMenu`
+            // show `startGameMenu`
             startGameMenu.SetActive(true);
         }
     }
@@ -129,7 +129,7 @@ public class GameManager : MonoBehaviour {
         currentRound += 1;
         // set `currentRoundTime` to `maxRoundTime`
         currentRoundTime = maxRoundTime;
-        if ( currentRound <= maxRounds ) {
+        if (currentRound <= maxRounds) {
             // show `gameResultMenu`
             Debug.Log("Showing End Result");
             StopGame();

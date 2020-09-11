@@ -40,14 +40,19 @@ public class PlayerController : MonoBehaviour {
         transform.LookAt(lookAt);
     }
 
+    Transform item = null;
     void PickupItem() {
         //spherecast nearest object
         RaycastHit hit;
-        if (Physics.SphereCast(transform.position, 1f, transform.TransformDirection(Vector3.forward), out hit)) {
-            Debug.DrawRay(transform.position, transform.TransformDirection(Vector3.forward) * hit.distance, Color.yellow);
-            Debug.Log(hit.collider.gameObject);
+        if (Physics.SphereCast(transform.position, 0.5f, transform.TransformDirection(Vector3.forward), out hit, 1f)) {
+            if (Input.GetMouseButtonDown(0)) {
+                item = hit.collider.gameObject.transform; //save
+            }
+            if (Input.GetMouseButton(0)) {
+                Debug.DrawRay(transform.position, transform.TransformDirection(Vector3.forward) * hit.distance, Color.yellow);
+                item.GetComponent<Rigidbody>().MovePosition(transform.forward * 1.25f + transform.position);
+            }
         }
-
     }
 
 }
