@@ -9,10 +9,11 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 0}
-  m_Name: New Bring Item Object
-  m_EditorClassIdentifier: Assembly-CSharp::BringItemObject
-  itemName: Pedro
-  model: sphere
+  m_Script: {fileID: 11500000, guid: cb6e670454b4a234a9e96feaaa50452f, type: 3}
+  m_Name: New Item
+  m_EditorClassIdentifier: 
+  itemName: 
+  prefab: {fileID: 0}
   icon: {fileID: 10913, guid: 0000000000000000f000000000000000, type: 0}
-  weight: 1
+  weight: 0
+  cooldown: 0

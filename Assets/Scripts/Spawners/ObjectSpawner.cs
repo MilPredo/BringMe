@@ -4,18 +4,18 @@ using UnityEngine;
 public class ObjectSpawner : MonoBehaviour {
 
     [SerializeField] private List<GameObject> spawnedItems = new List<GameObject>();  // keeps track of all spawned items
-    
+
     [SerializeField] private int maxSpawnedItem = 25;  // maximum number of items that can be spawned
-    
+
     [SerializeField] private float minXSpawnPosition = -225f;  // min x spawn boundary
-    
+
     [SerializeField] private float maxXSpawnPosition = 225f;  // max x spawn boundary
-    
+
     [SerializeField] private float minZSpawnPosition = -225f;  // min z spawn boundary
-    
+
     [SerializeField] private float maxZSpawnPosition = 225f;  // max z spawn boundary
 
-    private ItemManager itemManager;  // instance of `ItemManager`
+    //private ItemManager itemManager;  // instance of `ItemManager`
 
     // list of all possible items that can be spawned
     private string[] itemModels = new string[] {
@@ -26,7 +26,7 @@ public class ObjectSpawner : MonoBehaviour {
 
     private void Awake() {
         Instance = this;  // create a variable containing an instance of this object
-        itemManager = new ItemManager();  // create an instance of the `ItemManager()`
+        //itemManager = new ItemManager();  // create an instance of the `ItemManager()`
     }
 
     private void Start() {
@@ -69,7 +69,7 @@ public class ObjectSpawner : MonoBehaviour {
         // using item manager to spawn items
         string model = itemModels[Random.Range(0, itemModels.Length)];
         Vector3 position = GetNewPosition();
-        itemManager.Spawn(model, position);
+        //itemManager.Spawn(model, position);
     }
 
     public void DispawnItem(GameObject instance) {

@@ -1,12 +1,13 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+[CreateAssetMenu]
+public class TEST : ScriptableObject {
+    string test;
+    GameObject testobject;
+}
 
-public class test : MonoBehaviour {
-    // Start is called before the first frame update
-    void Start() {
-        ItemManager a = new ItemManager();
-        a.Spawn("cube", new Vector3(1f, 1f, 1f));
-    }
-
+[CreateAssetMenu]
+public class TEST2 : TEST {
+    int num;
 }
