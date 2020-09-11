@@ -71,6 +71,10 @@ public class RoundManager : MonoBehaviour {
         }
     }
 
+    public void StopRound() {
+        this.currentRoundTime = 0f;
+    }
+
     private IEnumerator PrepareRound(float time) {
         // countdown from `time`
         prepareMessageText.text = "STARTING IN";
