@@ -18,9 +18,7 @@ public class ObjectSpawner : MonoBehaviour {
     //private ItemManager itemManager;  // instance of `ItemManager`
 
     // list of all possible items that can be spawned
-    private string[] itemModels = new string[] {
-        "cube", "capsule", "cylinder", "plane", "quad", "sphere"
-    };
+    private ItemManager itemManager;
 
     public static ObjectSpawner Instance { get; private set; }
 
@@ -30,6 +28,7 @@ public class ObjectSpawner : MonoBehaviour {
     }
 
     private void Start() {
+        itemManager = gameObject.GetComponent<ItemManager>();
         // spawn specified(maxSpawnedItems) at the start of the game
         while (maxSpawnedItem > 0) {
             SpawnItem();
@@ -67,9 +66,7 @@ public class ObjectSpawner : MonoBehaviour {
         // }
 
         // using item manager to spawn items
-        string model = itemModels[Random.Range(0, itemModels.Length)];
-        Vector3 position = GetNewPosition();
-        //itemManager.Spawn(model, position);
+        itemManager.Spawn(Random.Range(0, 3), GetNewPosition(), Quaternion.identity);
     }
 
     public void DispawnItem(GameObject instance) {
