@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: Sphere
   m_EditorClassIdentifier: 
   itemName: 
-  prefab: {fileID: 0}
+  prefab: {fileID: 8784057414614538644, guid: c07fa2e6d37ed8f45853fac8ea1fc379, type: 3}
   icon: {fileID: 10913, guid: 0000000000000000f000000000000000, type: 0}
   weight: 0
   cooldown: 0
