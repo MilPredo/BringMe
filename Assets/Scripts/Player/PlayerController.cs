@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public class PlayerController : MonoBehaviour {
-    float speed = 500.0f;
+    float speed = 20.0f;
     Vector3 lookAt;
     Vector3 direction;
     Rigidbody player;
@@ -11,15 +11,18 @@ public class PlayerController : MonoBehaviour {
         player = GetComponent<Rigidbody>();
     }
 
-    void LateUpdate() {
+    void Update() {
         Move();
         LookAtMouse();
         PickupItem();
+        Jump();
         //Debug.Log(PrimitiveType.Plane);
     }
 
     void FixedUpdate() {
-        player.velocity = direction * Time.deltaTime * speed;
+        if (direction.magnitude > 0f) {
+            player.velocity += (player.velocity.magnitude < 10f) ? direction * Time.deltaTime * speed : Vector3.zero;
+        }
     }
 
     void Move() {
@@ -27,6 +30,12 @@ public class PlayerController : MonoBehaviour {
         direction = Vector3.ClampMagnitude(direction, 1f);
         //transform.Translate(direction * Time.deltaTime * speed, Space.World);
         Camera.main.transform.position = transform.position + new Vector3(0, 10, -10);
+    }
+
+    void Jump() {
+        if (Input.GetKeyDown(KeyCode.Space)) {
+            player.velocity += Vector3.up * 10f;
+        }
     }
 
     void LookAtMouse() {
@@ -37,6 +46,7 @@ public class PlayerController : MonoBehaviour {
             lookAt = ray.GetPoint(distance);
             lookAt.y = transform.position.y;
         }
+        //player.MoveRotation(Quaternion.LookRotation(lookAt, Vector3.up));
         transform.LookAt(lookAt);
     }
 
@@ -46,7 +56,6 @@ public class PlayerController : MonoBehaviour {
         RaycastHit hit;
         if (Physics.SphereCast(transform.position, 0.5f, transform.TransformDirection(Vector3.forward), out hit, 1f)) {
             if (Input.GetMouseButtonDown(0)) {
-                GameObject.Find("GameManager").GetComponent<ItemManager>().Spawn(0, transform.position, transform.rotation);
                 item = hit.collider.gameObject.transform; //save
             }
             if (Input.GetMouseButton(0)) {

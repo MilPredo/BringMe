@@ -19,25 +19,26 @@ public class PickupManager : MonoBehaviour {
         Plog("detected object", other.gameObject.name);
 
         string targetItemName = arbiterManager.TargetItemName;
-        if ( other.gameObject.name == targetItemName ) {
+        if (other.gameObject.name == targetItemName) {
             Plog("object acquired", other.gameObject.name);
             isTargetAcquired = true;
             arbiterManager.ChangeTargetItem();
             Destroy(other.gameObject);
+            roundManager.StopRound();
         } else {
             Plog("invalid object", other.gameObject.name);
-            if ( other.gameObject.name == "Player" ) {
+            if (other.gameObject.name == "Player") {
                 Plog("player detected", other.gameObject.name);
                 targetBearer = other.gameObject;
             }
         }
 
-        if ( isTargetAcquired && targetBearer != null ) {
-            Plog("round winner", targetBearer.gameObject.name);
-            roundManager.StopRound();
-        } else {
-            targetBearer = null;
-        }
+        // if (isTargetAcquired && targetBearer != null) {
+        //     Plog("round winner", targetBearer.gameObject.name);
+        //     roundManager.StopRound();
+        // } else {
+        //     targetBearer = null;
+        // }
     }
 
     private void Plog(string titles, string msg) {

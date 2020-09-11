@@ -2,15 +2,16 @@
 using UnityEngine;
 
 public class ObjectSpawner : MonoBehaviour {
-    [SerializeField] private int maxSpawnedItem = 25;  // maximum number of items that can be spawned
+    [SerializeField]
+    private int maxSpawnedItem = 25;  // maximum number of items that can be spawned
 
-    [SerializeField] private float minXSpawnPosition = -50;  // min x spawn boundary
+    [SerializeField]
+    private float minSpawnRadius = 10;
 
-    [SerializeField] private float maxXSpawnPosition = 50;  // max x spawn boundary
+    [SerializeField]
+    private float maxSpawnRadius = 10;
 
-    [SerializeField] private float minZSpawnPosition = -50;  // min z spawn boundary
 
-    [SerializeField] private float maxZSpawnPosition = 50;  // max z spawn boundary
 
     public static ObjectSpawner Instance { get; private set; }
 
@@ -30,10 +31,10 @@ public class ObjectSpawner : MonoBehaviour {
 
     Vector3 GetNewPosition() {
         // randomize location of the spawned item
-        float x = Random.Range(minXSpawnPosition, maxXSpawnPosition);
-        float y = Random.Range(1, 2);
-        float z = Random.Range(minZSpawnPosition, maxZSpawnPosition);
-        Vector3 spawnPosition = new Vector3(x, y, z);
+        Vector2 random = Random.insideUnitCircle * (maxSpawnRadius - minSpawnRadius);
+        random = random + random.normalized * minSpawnRadius;
+
+        Vector3 spawnPosition = new Vector3(random.x, 1f, random.y);
         return spawnPosition;
     }
 

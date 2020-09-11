@@ -33,11 +33,11 @@ public class RoundManager : MonoBehaviour {
     private void Update() {
         currentRoundTime -= Time.deltaTime;
         SetTimerTime(timerText, currentRoundTime);
-        if ( currentRoundTime < 0 && (isPlaying) ) {
+        if (currentRoundTime < 0 && (isPlaying)) {
             EndRound();
             currentPrepareTime -= Time.deltaTime;
             SetTimerTime(prepareCountdownText, currentPrepareTime);
-            if ( currentPrepareTime < 0 && isPlaying ) {
+            if (currentPrepareTime < 0 && isPlaying) {
                 StartRound();
                 Debug.Log($"Start Round { currentRound }");
             }
@@ -57,13 +57,13 @@ public class RoundManager : MonoBehaviour {
         // deactivate game
         player.SetActive(false);
         ui.SetActive(false);
-        if ( currentRound >= maxRound ) {
+        if (currentRound >= maxRound) {
             Debug.Log("Showing Game Result");
             endGameResultMenu.SetActive(true);
             isPlaying = false;
         } else {
             Debug.Log($"End of Round { currentRound }");
-            if ( currentPrepareTime <= 0 ) {
+            if (currentPrepareTime <= 0) {
                 currentPrepareTime = maxPrepareTime;
             }
             prepareMessageText.text = $"End of Round { currentRound }";
@@ -72,6 +72,7 @@ public class RoundManager : MonoBehaviour {
     }
 
     public void StopRound() {
+        Debug.Log("STOPPING ROUND");
         this.currentRoundTime = 0f;
     }
 
@@ -98,10 +99,10 @@ public class RoundManager : MonoBehaviour {
     }
 
     private TMPro.TextMeshProUGUI FindTextFromFrame(GameObject source, string target) {
-        foreach ( Transform child in source.transform ) {
+        foreach (Transform child in source.transform) {
             if (child.gameObject.name == "Frame") {
-                foreach ( Transform frameChild in child.gameObject.transform ) {
-                    if ( frameChild.gameObject.name == target ) {
+                foreach (Transform frameChild in child.gameObject.transform) {
+                    if (frameChild.gameObject.name == target) {
                         return frameChild.gameObject.GetComponent<TMPro.TextMeshProUGUI>();
                     }
                 }
