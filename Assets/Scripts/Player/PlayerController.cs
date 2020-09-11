@@ -46,6 +46,7 @@ public class PlayerController : MonoBehaviour {
         RaycastHit hit;
         if (Physics.SphereCast(transform.position, 0.5f, transform.TransformDirection(Vector3.forward), out hit, 1f)) {
             if (Input.GetMouseButtonDown(0)) {
+                GameObject.Find("GameManager").GetComponent<ItemManager>().Spawn(0, transform.position, transform.rotation);
                 item = hit.collider.gameObject.transform; //save
             }
             if (Input.GetMouseButton(0)) {
