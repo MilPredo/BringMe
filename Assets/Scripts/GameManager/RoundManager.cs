@@ -48,6 +48,7 @@ public class RoundManager : MonoBehaviour {
         player.SetActive(true);
         ui.SetActive(true);
         prepareRoundMenu.SetActive(false);
+        player.transform.position = new Vector3(0f, 0.5f, 0f);
         currentRoundTime = maxRoundTime;
         currentRound += 1;
     }
