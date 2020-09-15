@@ -21,10 +21,10 @@ public class PickupManager : MonoBehaviour {
         string targetItemName = arbiterManager.TargetItemName;
         if (other.gameObject.name == targetItemName) {
             Plog("object acquired", other.gameObject.name);
-            isTargetAcquired = true;
-            arbiterManager.ChangeTargetItem();
+            // isTargetAcquired = true;
+            arbiterManager.PickUpItem(null);
             Destroy(other.gameObject);
-            roundManager.StopRound();
+            // roundManager.StopRound();
         } else {
             Plog("invalid object", other.gameObject.name);
             if (other.gameObject.name == "Player") {

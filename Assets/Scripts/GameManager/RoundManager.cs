@@ -22,8 +22,11 @@ public class RoundManager : MonoBehaviour {
     private TMPro.TextMeshProUGUI prepareMessageText;
     private TMPro.TextMeshProUGUI timerText;
 
+    private ArbiterManager arbiterManager;
+
     private void Start() {
         // wait for 15 seconds
+        arbiterManager = GameObject.Find("Arbiter").GetComponent<ArbiterManager>();
         prepareCountdownText = FindTextFromFrame(prepareRoundMenu, "Countdown");
         prepareMessageText = FindTextFromFrame(prepareRoundMenu, "Message");
         timerText = FindTextFromFrame(ui, "Timer");
@@ -51,6 +54,7 @@ public class RoundManager : MonoBehaviour {
         player.transform.position = new Vector3(0f, 0.5f, 0f);
         currentRoundTime = maxRoundTime;
         currentRound += 1;
+        arbiterManager.ItemsLeftToBring = maxRound - (currentRound-1);
     }
 
     private void EndRound() {

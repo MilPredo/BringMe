@@ -358,6 +358,10 @@ PrefabInstance:
       propertyPath: remainingItemsToBringText
       value: 
       objectReference: {fileID: 858324239}
+    - target: {fileID: -1179464700384111439, guid: 3be7976e3b176184f95f6709efb43e7a, type: 3}
+      propertyPath: itemsLeftToBringText
+      value: 
+      objectReference: {fileID: 858324239}
     - target: {fileID: 2147772741065860525, guid: 3be7976e3b176184f95f6709efb43e7a, type: 3}
       propertyPath: m_LocalPosition.x
       value: 0
