@@ -1,8 +1,8 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-
-public class PlayerController : MonoBehaviour {
+using Mirror;
+public class PlayerController : NetworkBehaviour {
     float speed = 20.0f;
     Vector3 lookAt;
     Vector3 direction;
@@ -31,6 +31,8 @@ public class PlayerController : MonoBehaviour {
         //transform.Translate(direction * Time.deltaTime * speed, Space.World);
         Camera.main.transform.position = transform.position + new Vector3(0, 10, -10);
     }
+
+
 
     void Jump() {
         if (Input.GetKeyDown(KeyCode.Space)) {

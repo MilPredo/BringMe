@@ -1,10 +1,8 @@
 using UnityEngine;
 using UnityEngine.AI;
 
-namespace Mirror.Examples.Tanks
-{
-    public class Tank : NetworkBehaviour
-    {
+namespace Mirror.Examples.Tanks {
+    public class Tank : NetworkBehaviour {
         [Header("Components")]
         public NavMeshAgent agent;
         public Animator animator;
@@ -30,11 +28,10 @@ namespace Mirror.Examples.Tanks
         public bool isReady;
 
         public bool isDead => health <= 0;
-        public TextMesh nameText;
+        [SerializeField] public TextMesh nameText;
 
 
-        void Update()
-        {
+        void Update() {
             nameText.text = playerName;
             nameText.transform.rotation = Camera.main.transform.rotation;
 
@@ -62,16 +59,14 @@ namespace Mirror.Examples.Tanks
             animator.SetBool("Moving", agent.velocity != Vector3.zero);
 
             // shoot
-            if (Input.GetKeyDown(shootKey))
-            {
+            if (Input.GetKeyDown(shootKey)) {
                 CmdFire();
             }
         }
 
         // this is called on the server
         [Command]
-        void CmdFire()
-        {
+        void CmdFire() {
             GameObject projectile = Instantiate(projectilePrefab, projectileMount.position, transform.rotation);
             projectile.GetComponent<Projectile>().source = gameObject;
             NetworkServer.Spawn(projectile);
@@ -80,13 +75,11 @@ namespace Mirror.Examples.Tanks
 
         // this is called on the tank that fired for all observers
         [ClientRpc]
-        void RpcOnFire()
-        {
+        void RpcOnFire() {
             animator.SetTrigger("Shoot");
         }
 
-        public void SendReadyToServer(string playername)
-        {
+        public void SendReadyToServer(string playername) {
             if (!isLocalPlayer)
                 return;
 
@@ -94,14 +87,10 @@ namespace Mirror.Examples.Tanks
         }
 
         [Command]
-        void CmdReady(string playername)
-        {
-            if (string.IsNullOrEmpty(playername))
-            {
+        void CmdReady(string playername) {
+            if (string.IsNullOrEmpty(playername)) {
                 playerName = "PLAYER" + Random.Range(1, 99);
-            }
-            else
-            {
+            } else {
                 playerName = playername;
             }
 
