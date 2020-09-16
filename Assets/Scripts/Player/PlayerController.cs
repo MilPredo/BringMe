@@ -4,14 +4,17 @@ using UnityEngine;
 using Mirror;
 public class PlayerController : NetworkBehaviour {
     float speed = 20.0f;
+    float gravity = 9.81f;
+    float directionY;
     Vector3 lookAt;
     Vector3 direction;
-    Rigidbody player;
+    CharacterController player;
     void Start() {
-        player = GetComponent<Rigidbody>();
+        player = GetComponent<CharacterController>();
     }
 
     void Update() {
+        if (!isLocalPlayer) return;
         Move();
         LookAtMouse();
         PickupItem();
@@ -20,9 +23,8 @@ public class PlayerController : NetworkBehaviour {
     }
 
     void FixedUpdate() {
-        if (direction.magnitude > 0f) {
-            player.velocity += (player.velocity.magnitude < 10f) ? direction * Time.deltaTime * speed : Vector3.zero;
-        }
+        if (!isLocalPlayer) return;
+        player.Move(direction * Time.deltaTime * speed);
     }
 
     void Move() {
@@ -32,12 +34,13 @@ public class PlayerController : NetworkBehaviour {
         Camera.main.transform.position = transform.position + new Vector3(0, 10, -10);
     }
 
-
-
     void Jump() {
-        if (Input.GetKeyDown(KeyCode.Space)) {
-            player.velocity += Vector3.up * 10f;
+        if (Input.GetKeyDown(KeyCode.Space) && player.isGrounded) {
+            //player.velocity += Vector3.up * 10f;
+            directionY = 2f;
         }
+        directionY -= gravity * Time.deltaTime;
+        direction.y = directionY;
     }
 
     void LookAtMouse() {
