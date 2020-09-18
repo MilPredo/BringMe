@@ -18,18 +18,15 @@ public class RoundManager : MonoBehaviour {
     [SerializeField] private GameObject roundEndMenu;
     [SerializeField] private GameObject endGameResultMenu;
 
-    private TMPro.TextMeshProUGUI prepareCountdownText;
-    private TMPro.TextMeshProUGUI prepareMessageText;
-    private TMPro.TextMeshProUGUI timerText;
+    [SerializeField] private TMPro.TextMeshProUGUI prepareCountdownText;
+    [SerializeField] private TMPro.TextMeshProUGUI prepareMessageText;
+    [SerializeField] private TMPro.TextMeshProUGUI timerText;
 
     private ArbiterManager arbiterManager;
 
     private void Start() {
         // wait for 15 seconds
         arbiterManager = GameObject.Find("Arbiter").GetComponent<ArbiterManager>();
-        prepareCountdownText = FindTextFromFrame(prepareRoundMenu, "Countdown");
-        prepareMessageText = FindTextFromFrame(prepareRoundMenu, "Message");
-        timerText = FindTextFromFrame(ui, "Timer");
         StartCoroutine(PrepareRound(maxPrepareTime));
     }
 
@@ -101,20 +98,4 @@ public class RoundManager : MonoBehaviour {
         float roundedTime = Mathf.Round(time);
         timer.text = roundedTime.ToString();
     }
-
-    private TMPro.TextMeshProUGUI FindTextFromFrame(GameObject source, string target) {
-        foreach (Transform child in source.transform) {
-            if (child.gameObject.name == "Frame") {
-                foreach (Transform frameChild in child.gameObject.transform) {
-                    if (frameChild.gameObject.name == target) {
-                        return frameChild.gameObject.GetComponent<TMPro.TextMeshProUGUI>();
-                    }
-                }
-            }
-        }
-        return null;
-    }
-
-
-
 }
