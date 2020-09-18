@@ -10,15 +10,14 @@ public class PlayerController : NetworkBehaviour {
     Vector3 lookAt;
     Vector3 direction;
     CharacterController player;
-    Transform pickedItem = null;
-    Rigidbody rb = null;
-    RaycastHit hit;
+    Rigidbody pickedItem = null;
+    RaycastHit hit = new RaycastHit();
     void Start() {
+
         player = GetComponent<CharacterController>();
     }
 
     void Update() {
-        CmdSphereCast();
         if (!isLocalPlayer) return;
         Move();
         LookAtMouse();
@@ -60,51 +59,56 @@ public class PlayerController : NetworkBehaviour {
         transform.LookAt(lookAt);
     }
 
-
-
     [Command] //call from client, run in server
     void CmdSpawnPrefab() {
         Debug.Log(transform.position);
         GameObject spawn = Instantiate(prefab, transform.position, transform.rotation);
-        NetworkServer.Spawn(spawn);
+        NetworkServer.Spawn(spawn, transform.gameObject);
+        Debug.LogError("Spawn Success");
     }
 
     [Command]
     void CmdMoveItem() {
-        rb.MovePosition(transform.forward * 1.25f + transform.position);
+        if (pickedItem != null) {
+            pickedItem.MovePosition(transform.forward * 1.25f + transform.position);
+        }
     }
 
     [Command]
-    void CmdGetRigidBody() {
-        try {
-            pickedItem = hit.collider.gameObject.transform; //save
-            rb = pickedItem.GetComponent<Rigidbody>();
-        } catch (System.Exception) {
+    void CmdSetItem() {
+        if (hit.rigidbody != null) {
+            pickedItem = hit.rigidbody;
+            //Debug.Log("ITEM: " + pickedItem);
         }
     }
 
-    [Server]
+    [Command]
     void CmdSphereCast() {
-        if (Physics.SphereCast(transform.position, 0.5f, transform.TransformDirection(Vector3.forward), out hit, 4f)) {
-            //isHit = true;
-        }
+        Physics.SphereCast(transform.position, 0.5f, transform.TransformDirection(Vector3.forward), out hit, 4f);
     }
 
     void PickupItem() {
+        CmdSphereCast();
+        Debug.DrawRay(transform.position, transform.TransformDirection(Vector3.forward) * hit.distance, Color.yellow);
+
         if (Input.GetMouseButtonDown(1)) {
+            Debug.LogError("Pressed Right Click");
             CmdSpawnPrefab();
         }
-        if (Input.GetMouseButtonDown(0)) {
-            CmdGetRigidBody();
+
+        if (Input.GetMouseButtonDown(0)) { //press e, ray cast
+            Debug.LogError("Pressed Left Click");
+            CmdSetItem();
         }
-        if (Input.GetMouseButton(0) && (pickedItem != null) && (rb != null)) {
-            Debug.DrawRay(transform.position, transform.TransformDirection(Vector3.forward) * hit.distance, Color.yellow);
+
+        if (Input.GetMouseButton(0)) { //press and hold e
+            Debug.LogError("Pressed and Hold Left Click");
             CmdMoveItem();
         }
+
         if (Input.GetMouseButtonUp(0)) {
+            Debug.LogError("Released Left Click");
             pickedItem = null;
-            rb = null;
         }
     }
-
 }

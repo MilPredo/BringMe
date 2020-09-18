@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: cb6e670454b4a234a9e96feaaa50452f, type: 3}
   m_Name: Cube
   m_EditorClassIdentifier: 
-  itemName: 
+  itemName: Cube
   prefab: {fileID: 7950576042800517483, guid: f18c18e238d71144cabc81973010ef1c, type: 3}
   icon: {fileID: 10913, guid: 0000000000000000f000000000000000, type: 0}
   weight: 0

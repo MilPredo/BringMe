@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: cb6e670454b4a234a9e96feaaa50452f, type: 3}
   m_Name: Cylinder
   m_EditorClassIdentifier: 
-  itemName: 
+  itemName: Cylinder
   prefab: {fileID: 8225898778158145115, guid: c12433a1171408f45b4b84dc91f8ca46, type: 3}
   icon: {fileID: 10913, guid: 0000000000000000f000000000000000, type: 0}
   weight: 0
