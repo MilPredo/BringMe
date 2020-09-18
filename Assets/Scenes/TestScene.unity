@@ -1553,7 +1553,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   maxRound: 3
-  maxRoundTime: 30
+  maxRoundTime: 300
   maxPrepareTime: 5
   player: {fileID: 1758985131}
   ui: {fileID: 1584525508}
@@ -2419,6 +2419,10 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: -3464655756890853535, guid: 0e2a145d4aaf16144936660703146f1e, type: 3}
+      propertyPath: sceneId
+      value: 4174331259
+      objectReference: {fileID: 0}
     - target: {fileID: 3934611322173630911, guid: 0e2a145d4aaf16144936660703146f1e, type: 3}
       propertyPath: m_Name
       value: EYES

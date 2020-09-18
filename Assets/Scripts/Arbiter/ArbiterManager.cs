@@ -24,7 +24,9 @@ public class ArbiterManager : MonoBehaviour {
         Debug.Log($"Changing Target Item: { targetItem.prefab.name }");
     }
 
-    public void PickUpItem(GameObject item) {
+    public void PickUpItem(GameObject player) {
+        player.GetComponent<ScoreManager>().AddScore();
+
         ChangeTargetItem();
         itemsLeftToBring -= 1;
         itemsLeftToBringText.text = $"ITEMS LEFT: { itemsLeftToBring.ToString() }";

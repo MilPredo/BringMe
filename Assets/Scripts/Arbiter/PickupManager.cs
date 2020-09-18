@@ -7,8 +7,8 @@ public class PickupManager : MonoBehaviour {
 
     private ArbiterManager arbiterManager;
     private RoundManager roundManager;
-    private bool isTargetAcquired = false;
     private GameObject targetBearer;
+    private bool isItemAcquired = false;
 
     private void Start() {
         arbiterManager = gameObject.GetComponentInParent<ArbiterManager>();
@@ -18,13 +18,15 @@ public class PickupManager : MonoBehaviour {
     private void OnTriggerEnter(Collider other) {
         Plog("detected object", other.gameObject.name);
 
+        if ( this.isItemAcquired && other.tag.ToLower() == "player" )
+            arbiterManager.PickUpItem(other.gameObject);
+            this.isItemAcquired = false;
+
         string targetItemName = arbiterManager.TargetItemName;
         if (other.gameObject.name == targetItemName) {
             Plog("object acquired", other.gameObject.name);
-            // isTargetAcquired = true;
-            arbiterManager.PickUpItem(null);
+            this.isItemAcquired = true;
             Destroy(other.gameObject);
-            // roundManager.StopRound();
         } else {
             Plog("invalid object", other.gameObject.name);
             if (other.gameObject.name == "Player") {
@@ -32,13 +34,6 @@ public class PickupManager : MonoBehaviour {
                 targetBearer = other.gameObject;
             }
         }
-
-        // if (isTargetAcquired && targetBearer != null) {
-        //     Plog("round winner", targetBearer.gameObject.name);
-        //     roundManager.StopRound();
-        // } else {
-        //     targetBearer = null;
-        // }
     }
 
     private void Plog(string titles, string msg) {
