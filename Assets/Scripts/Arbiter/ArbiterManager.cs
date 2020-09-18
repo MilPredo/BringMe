@@ -20,7 +20,7 @@ public class ArbiterManager : MonoBehaviour {
 
     public void ChangeTargetItem() {
         targetItem = targetSelections[Random.Range(0, targetSelections.Count)];
-        targetItemText.text = $"TARGET ITEM: { targetItem.prefab.name.ToUpper() }";
+        targetItemText.text = $"TARGET: { targetItem.prefab.name.ToUpper() }";
         Debug.Log($"Changing Target Item: { targetItem.prefab.name }");
     }
 
