@@ -1,7 +1,8 @@
 ﻿using System.Collections.Generic;
 using UnityEngine;
+using Mirror;
 
-public class ArbiterManager : MonoBehaviour {
+public class ArbiterManager : NetworkBehaviour {
 
     [SerializeField] List<Item> targetSelections;
     [SerializeField] private Item targetItem;
@@ -10,18 +11,18 @@ public class ArbiterManager : MonoBehaviour {
     [SerializeField] private GameObject scoreBoardContent;
     [SerializeField] private GameObject scoreBoardContentTextPrefab;
 
-    private RoundManager roundManager;
+    [SerializeField] private RoundManager roundManager;
 
-    private int itemsLeftToBring = 3;
+    [SyncVar] private int itemsLeftToBring = 3;
 
-    private void Start() {
+    public override void OnStartServer() {
+        base.OnStartServer();
         ChangeTargetItem();
-        this.roundManager = GameObject.Find("GameManager").GetComponent<RoundManager>();
         this.itemsLeftToBringText.text = $"ITEMS LEFT: { this.itemsLeftToBring.ToString() }";
     }
 
     public void ChangeTargetItem() {
-        this.targetItem = targetSelections[Random.Range(0, targetSelections.Count)];
+        this.targetItem = targetSelections[ Random.Range( 0, targetSelections.Count ) ];
         this.targetItemText.text = $"TARGET: { this.targetItem.prefab.name.ToUpper() }";
         Debug.Log($"Changing Target Item: { this.targetItem.prefab.name }");
     }
