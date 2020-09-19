@@ -11,18 +11,24 @@ public class PlayerController : NetworkBehaviour {
     Vector3 lookAt;
     Vector3 direction;
     CharacterController player;
-    Rigidbody pickedItem = null;
+    GameObject pickedItem = null;
+    Rigidbody pickedItemRB = null;
     RaycastHit hit = new RaycastHit();
+    Color textCol;
+    Vector3 camVel = Vector3.zero;
 
     [SerializeField] public TextMesh nameText;
     void Start() {
+        transform.GetChild(0).GetComponent<Renderer>().material.color = new Color(Random.value, Random.value, Random.value);
         nameText.text = playerName.Length > 0 ? playerName : "netID: " + GetComponent<NetworkIdentity>().netId;
         player = GetComponent<CharacterController>();
     }
 
     void Update() {
-        if (!isLocalPlayer) return;
         nameText.transform.rotation = Camera.main.transform.rotation;
+        if (!isLocalPlayer) return;
+        Color textCol = new Color(Random.value, Random.value, Random.value);
+        nameText.color = textCol;
         Move();
         LookAtMouse();
         PickupItem();
@@ -33,13 +39,15 @@ public class PlayerController : NetworkBehaviour {
     void FixedUpdate() {
         if (!isLocalPlayer) return;
         player.Move(direction * Time.deltaTime * speed);
+        Camera.main.transform.position = Vector3.SmoothDamp(Camera.main.transform.position, transform.position + new Vector3(0, 10, -10), ref camVel, 0.1f);
     }
+
 
     void Move() {
         direction = new Vector3(Input.GetAxis("Horizontal"), 0f, Input.GetAxis("Vertical"));
         direction = Vector3.ClampMagnitude(direction, 1f);
         //transform.Translate(direction * Time.deltaTime * speed, Space.World);
-        Camera.main.transform.position = transform.position + new Vector3(0, 10, -10);
+        //Camera.main.transform.position = transform.position + new Vector3(0, 10, -10);
     }
 
     void Jump() {
@@ -47,7 +55,7 @@ public class PlayerController : NetworkBehaviour {
             //player.velocity += Vector3.up * 10f;
             directionY = 2f;
         }
-        directionY -= gravity * Time.deltaTime;
+        directionY -= -Physics.gravity.y * Time.deltaTime;
         direction.y = directionY;
     }
 
@@ -60,6 +68,7 @@ public class PlayerController : NetworkBehaviour {
             lookAt.y = transform.position.y;
         }
         //player.MoveRotation(Quaternion.LookRotation(lookAt, Vector3.up));
+        //transform.GetChild(0).LookAt(lookAt);
         transform.LookAt(lookAt);
     }
 
@@ -71,37 +80,66 @@ public class PlayerController : NetworkBehaviour {
         Debug.LogError("Spawn Success");
     }
 
+    Vector3 directionVec = Vector3.zero;
+    Vector3 lastDirectionVec = Vector3.zero;
+    Vector3 deltaDirVec = Vector3.zero;
     [Command]
     void CmdMoveItem() { //run server side movement.
-        if (pickedItem != null) {
-            pickedItem.MovePosition(transform.forward * 1.25f + transform.position);
-            RpcMoveItem();
+        if (pickedItemRB != null) {
+            Vector3 targetPoint = (transform.forward * 2f + transform.position + new Vector3(0, 1f, 0));
+            Vector3 itemPosition = pickedItemRB.position;
+            directionVec = (targetPoint - itemPosition);
+            deltaDirVec = directionVec - lastDirectionVec;
+            //float speedRB = Mathf.SmoothStep(0f, 300f, directionVec.magnitude / 5f);
+            //speedRB *= Time.fixedDeltaTime;
+            pickedItemRB.AddForce((directionVec * pickedItemRB.mass - (pickedItemRB.velocity * 0.1f)) * 20f);
+            //pickedItemRB.AddForce(directionVec + (directionVec * Time.deltaTime) * 50f);
+            lastDirectionVec = directionVec;
+            //pickedItemRB.AddForce(directionVec.normalized * speed); //* Vector3.SqrMagnitude(direction));
+            //pickedItemRB.AddForce(-pickedItemRB.velocity * Time.deltaTime, ForceMode.VelocityChange);
+            //pickedItemRB.MovePosition(transform.GetChild(0).forward * 1.25f + transform.position);
+            //pickedItemRB.MoveRotation(transform.GetChild(0).rotation);
+            //RpcMoveItem();
         }
     }
 
     [ClientRpc]
     void RpcMoveItem() { //run a client side approximation of server side movement.
-        if (pickedItem != null) {
-            pickedItem.MovePosition(transform.forward * 1.25f + transform.position);
+        if (pickedItemRB != null) {
+            Vector3 targetPoint = (transform.forward * 2f + transform.position + new Vector3(0, 1f, 0));
+            Vector3 itemPosition = pickedItemRB.position;
+            directionVec = (targetPoint - itemPosition);
+            deltaDirVec = directionVec - lastDirectionVec;
+            //float speedRB = Mathf.SmoothStep(0f, 300f, directionVec.magnitude / 5f);
+            //speedRB *= Time.fixedDeltaTime;
+            pickedItemRB.AddForce((directionVec * pickedItemRB.mass - (pickedItemRB.velocity * 0.1f)) * 20f);
+            //pickedItemRB.AddForce(directionVec + (directionVec * Time.deltaTime) * 50f);
+            lastDirectionVec = directionVec;
+            //pickedItemRB.AddForce(directionVec.normalized * speed); //* Vector3.SqrMagnitude(direction));
+            //pickedItemRB.AddForce(-pickedItemRB.velocity * Time.deltaTime, ForceMode.VelocityChange);
+            //pickedItemRB.MovePosition(transform.GetChild(0).forward * 1.25f + transform.position);
+            //pickedItemRB.MoveRotation(transform.GetChild(0).rotation);
+            //RpcMoveItem();
         }
     }
 
     [Command]
     void CmdSetItem() {
         if (hit.rigidbody != null) {
-            pickedItem = hit.rigidbody;
+            pickedItem = hit.transform.gameObject;
+            pickedItemRB = hit.rigidbody;
             //Debug.Log("ITEM: " + pickedItem);
         }
     }
 
     [Command]
     void CmdSphereCast() {
-        Physics.SphereCast(transform.position, 0.5f, transform.TransformDirection(Vector3.forward), out hit, 4f);
+        Physics.SphereCast(transform.position, 1.0f, transform.forward, out hit, 4f);
     }
 
     void PickupItem() {
         CmdSphereCast();
-        Debug.DrawRay(transform.position, transform.TransformDirection(Vector3.forward) * hit.distance, Color.yellow);
+        Debug.DrawRay(transform.position, transform.forward * hit.distance, Color.yellow);
 
         if (Input.GetMouseButtonDown(1)) {
             //Debug.LogError("Pressed Right Click");
@@ -120,7 +158,7 @@ public class PlayerController : NetworkBehaviour {
 
         if (Input.GetMouseButtonUp(0)) {
             //Debug.LogError("Released Left Click");
-            pickedItem = null;
+            pickedItemRB = null;
         }
     }
 }

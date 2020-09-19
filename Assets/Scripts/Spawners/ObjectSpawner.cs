@@ -42,6 +42,6 @@ public class ObjectSpawner : NetworkBehaviour {
         // using item manager to spawn items
         GameObject.Find("GameManager")
             .GetComponent<ItemManager>()
-            .Spawn(Random.Range(0, 4), GetNewPosition(), Quaternion.identity);
+            .Spawn(Random.Range(0, 4), GetNewPosition(), Quaternion.identity).GetComponent<Renderer>().material.color = new Color(Random.value, Random.value, Random.value);
     }
 }
