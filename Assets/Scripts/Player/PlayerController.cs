@@ -6,19 +6,23 @@ public class PlayerController : NetworkBehaviour {
     float speed = 20.0f;
     float gravity = 9.81f;
     float directionY;
+    public string playerName = "";
     [SerializeField] GameObject prefab;
     Vector3 lookAt;
     Vector3 direction;
     CharacterController player;
     Rigidbody pickedItem = null;
     RaycastHit hit = new RaycastHit();
-    void Start() {
 
+    [SerializeField] public TextMesh nameText;
+    void Start() {
+        nameText.text = playerName.Length > 0 ? playerName : "netID: " + GetComponent<NetworkIdentity>().netId;
         player = GetComponent<CharacterController>();
     }
 
     void Update() {
         if (!isLocalPlayer) return;
+        nameText.transform.rotation = Camera.main.transform.rotation;
         Move();
         LookAtMouse();
         PickupItem();
@@ -61,14 +65,22 @@ public class PlayerController : NetworkBehaviour {
 
     [Command] //call from client, run in server
     void CmdSpawnPrefab() {
-        Debug.Log(transform.position);
+        //Debug.Log(transform.position);
         GameObject spawn = Instantiate(prefab, transform.position, transform.rotation);
         NetworkServer.Spawn(spawn, transform.gameObject);
         Debug.LogError("Spawn Success");
     }
 
     [Command]
-    void CmdMoveItem() {
+    void CmdMoveItem() { //run server side movement.
+        if (pickedItem != null) {
+            pickedItem.MovePosition(transform.forward * 1.25f + transform.position);
+            RpcMoveItem();
+        }
+    }
+
+    [ClientRpc]
+    void RpcMoveItem() { //run a client side approximation of server side movement.
         if (pickedItem != null) {
             pickedItem.MovePosition(transform.forward * 1.25f + transform.position);
         }
@@ -92,22 +104,22 @@ public class PlayerController : NetworkBehaviour {
         Debug.DrawRay(transform.position, transform.TransformDirection(Vector3.forward) * hit.distance, Color.yellow);
 
         if (Input.GetMouseButtonDown(1)) {
-            Debug.LogError("Pressed Right Click");
+            //Debug.LogError("Pressed Right Click");
             CmdSpawnPrefab();
         }
 
         if (Input.GetMouseButtonDown(0)) { //press e, ray cast
-            Debug.LogError("Pressed Left Click");
+            //Debug.LogError("Pressed Left Click");
             CmdSetItem();
         }
 
         if (Input.GetMouseButton(0)) { //press and hold e
-            Debug.LogError("Pressed and Hold Left Click");
+            //Debug.LogError("Pressed and Hold Left Click");
             CmdMoveItem();
         }
 
         if (Input.GetMouseButtonUp(0)) {
-            Debug.LogError("Released Left Click");
+            //Debug.LogError("Released Left Click");
             pickedItem = null;
         }
     }

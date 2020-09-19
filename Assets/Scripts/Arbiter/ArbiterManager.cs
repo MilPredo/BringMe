@@ -39,9 +39,9 @@ public class ArbiterManager : NetworkBehaviour {
         playerScoreManager.AddScore();
 
         // check if player is already added in score list
-        bool isPlayerListed  = false;
+        bool isPlayerListed = false;
         foreach (Transform child in this.scoreBoardContent.transform) {
-            if ( child.gameObject.name == $"{ playerScoreManager.Index.ToString() }:{ player.name }" ) {
+            if (child.gameObject.name == $"{ playerScoreManager.Index.ToString() }:{ player.name }") {
                 Debug.Log($"Player { player.name } updating score.");
                 isPlayerListed = true;
                 break;
@@ -49,29 +49,29 @@ public class ArbiterManager : NetworkBehaviour {
             isPlayerListed = false;
         }
 
-        if ( !isPlayerListed ) {
+        if (!isPlayerListed) {
             // add player score to score board
             Debug.Log($"Player { player.name } added to score board.");
-            
-            GameObject playerScoreText  = Instantiate<GameObject>( this.scoreBoardContentTextPrefab );
+
+            GameObject playerScoreText = Instantiate<GameObject>(this.scoreBoardContentTextPrefab);
             playerScoreText.name = $"{ playerScoreManager.Index.ToString() }:{ player.name }";
-            playerScoreText.transform.SetParent( scoreBoardContent.transform, true );
+            playerScoreText.transform.SetParent(scoreBoardContent.transform, true);
             playerScoreText.transform.position = scoreBoardContent.transform.position;
 
-            playerScoreManager.SetScoreBoard( playerScoreText.GetComponent<TMPro.TextMeshProUGUI>() );
+            playerScoreManager.SetScoreBoard(playerScoreText.GetComponent<TMPro.TextMeshProUGUI>());
         }
-            
+
         ChangeTargetItem();
         this.itemsLeftToBring -= 1;
         this.itemsLeftToBringText.text = $"ITEMS LEFT: { this.itemsLeftToBring.ToString() }";
-        if ( this.itemsLeftToBring == 0 ) {
+        if (this.itemsLeftToBring == 0) {
             this.roundManager.StopRound();
         }
     }
 
     public string TargetItemName {
         get { return $"{ this.targetItem.prefab.name }(Clone)"; }
-        private set {}
+        private set { }
     }
 
 }

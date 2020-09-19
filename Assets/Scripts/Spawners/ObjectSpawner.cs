@@ -1,7 +1,7 @@
 ﻿using System.Collections.Generic;
 using UnityEngine;
-
-public class ObjectSpawner : MonoBehaviour {
+using Mirror;
+public class ObjectSpawner : NetworkBehaviour {
     [SerializeField]
     private int maxSpawnedItem = 25;  // maximum number of items that can be spawned
 
