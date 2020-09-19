@@ -14,9 +14,9 @@ public class GameManager : NetworkBehaviour {
 
     [SerializeField] private RoundManager roundManager;
 
-    public int MaxRound { get; }
-    public int MaxRoundTime { get; }
-    public int MaxPrepareTime { get; }
+    public int MaxRound { get { return this.maxRound; } }
+    public float MaxRoundTime { get { return this.maxRoundTime; } }
+    public float MaxPrepareTime { get { return this.maxPrepareTime; } }
 
     public override void OnStartServer() {
         base.OnStartServer();

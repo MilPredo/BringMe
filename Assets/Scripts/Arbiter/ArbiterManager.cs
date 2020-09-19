@@ -15,6 +15,13 @@ public class ArbiterManager : NetworkBehaviour {
 
     [SyncVar] private int itemsLeftToBring = 3;
 
+    public int ItemsLeftToBring { 
+        set {
+            this.itemsLeftToBring = value;
+            this.itemsLeftToBringText.text = $"ITEMS LEFT: { this.itemsLeftToBring.ToString() }";
+        }
+    }
+    
     public override void OnStartServer() {
         base.OnStartServer();
         ChangeTargetItem();
@@ -67,10 +74,4 @@ public class ArbiterManager : NetworkBehaviour {
         private set {}
     }
 
-    public int ItemsLeftToBring { 
-        set {
-            this.itemsLeftToBring = value;
-            this.itemsLeftToBringText.text = $"ITEMS LEFT: { this.itemsLeftToBring.ToString() }";
-        }
-     }
 }
