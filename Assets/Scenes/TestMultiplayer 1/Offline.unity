@@ -1021,13 +1021,13 @@ MonoBehaviour:
   m_OnValueChanged:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 2069266503}
-        m_TargetAssemblyTypeName: 
-        m_MethodName: 
+      - m_Target: {fileID: 2069266508}
+        m_TargetAssemblyTypeName: SetIP, Assembly-CSharp
+        m_MethodName: Set
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: 
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
           m_IntArgument: 0
           m_FloatArgument: 0
           m_StringArgument: 
@@ -1390,6 +1390,7 @@ GameObject:
   - component: {fileID: 2069266505}
   - component: {fileID: 2069266506}
   - component: {fileID: 2069266507}
+  - component: {fileID: 2069266508}
   m_Layer: 0
   m_Name: NetworkManager
   m_TagString: Untagged
@@ -1469,7 +1470,7 @@ MonoBehaviour:
   runInBackground: 1
   autoStartServerBuild: 1
   showDebugMessages: 0
-  serverTickRate: 128
+  serverTickRate: 30
   offlineScene: Assets/Scenes/TestMultiplayer 1/Offline.unity
   onlineScene: Assets/Scenes/TestMultiplayer 1/Online.unity
   transport: {fileID: 2069266505}
@@ -1499,6 +1500,19 @@ MonoBehaviour:
   showGUI: 1
   offsetX: 0
   offsetY: 0
+--- !u!114 &2069266508
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2069266503}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6e99122bd47ef334aac92534d80f69d3, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  netman: {fileID: 2069266506}
 --- !u!1 &2124936156
 GameObject:
   m_ObjectHideFlags: 0
