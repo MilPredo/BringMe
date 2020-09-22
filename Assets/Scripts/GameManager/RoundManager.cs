@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using Mirror;
-
+using TMPro;
 public class RoundManager : MonoBehaviour {
     [SerializeField] private int maxRound = 3;
     [SerializeField] private float maxRoundTime = 60f;
@@ -21,9 +21,9 @@ public class RoundManager : MonoBehaviour {
 
     [SerializeField] private GameManager gameManager;
 
-    [SerializeField] private TMPro.TextMeshProUGUI prepareCountdownText;
-    [SerializeField] private TMPro.TextMeshProUGUI prepareMessageText;
-    [SerializeField] private TMPro.TextMeshProUGUI timerText;
+    [SerializeField] private TextMeshProUGUI prepareCountdownText;
+    [SerializeField] private TextMeshProUGUI prepareMessageText;
+    [SerializeField] private TextMeshProUGUI timerText;
 
     [SerializeField] private ArbiterManager arbiterManager;
 
