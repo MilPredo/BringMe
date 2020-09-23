@@ -5,14 +5,16 @@ using TMPro;
 using Mirror;
 namespace RummageBattle {
     [RequireComponent(typeof(CharacterController), typeof(NetworkTransform), typeof(NetworkIdentity))]
-    public class Player : PlayerManager, IDamageable, IEliminable, IFreezeable, IMoveable {
+    public class Player : PlayerManager, IDamageable<float>, IEliminable, IFreezeable, ITeleportable {
         [SerializeField] [SyncVar] private string playerName;
-        private const int maxHealth = 100;
-        [SyncVar] private int health;
+        private const float maxHealth = 100f;
+        [SyncVar] private float health;
         private Color color;
+        [SyncVar]
+        private float colorR, colorG, colorB;
         [SerializeField] private float speed = 20f;
         //private Item item;
-        //private Powerup powerup;
+        [SerializeField] private Powerup powerup;
         [SyncVar] public bool isReady = false;
         [SyncVar] public bool isFrozen = true;
         //misc
@@ -50,12 +52,15 @@ namespace RummageBattle {
         void Start() {
             health = maxHealth;
             players.Add(GetComponent<Player>());
-            GetComponent<Renderer>().material.color = new Color(Random.value, Random.value, Random.value);
+            colorR = Random.value;
+            colorG = Random.value;
+            colorB = Random.value;
         }
 
         void Update() {
+            GetComponent<Renderer>().material.color = new Color(colorR, colorG, colorB);
             if (!isLocalPlayer) return;
-            if (Input.GetMouseButton(1)) {
+            if (Input.GetMouseButtonDown(1)) {
                 CmdSpawnPrefab();
             }
 
@@ -86,11 +91,15 @@ namespace RummageBattle {
             transform.rotation = rotation;
         }
 
-        public void ApplyDamage(int amount) {
+        public void ApplyDamage(float amount) {
             health -= amount;
-            if (health <= 0) {
+            if (health <= 0f) {
                 Destroy(gameObject);
             }
+        }
+
+        public float GetHealth() {
+            return health;
         }
 
         public void Eliminate() {
@@ -106,9 +115,12 @@ namespace RummageBattle {
         }
 
         [SerializeField] private List<GameObject> hacc = new List<GameObject>();
+        [SerializeField] private ItemManager itemManager;
         [Command] //call from client, run in server
         void CmdSpawnPrefab() {
-            NetworkServer.Spawn(ItemManager.SpawnItem(hacc, transform.position, transform.rotation), transform.gameObject);
+            GameObject hax = itemManager.SpawnItem(hacc, transform.position, transform.rotation);
+            if (hax == null) return;
+            NetworkServer.Spawn(hax, transform.gameObject);
         }
     }
 }

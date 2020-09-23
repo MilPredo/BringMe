@@ -1,8 +1,10 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using Mirror;
 namespace RummageBattle {
-    public class ItemSpawner : ItemManager {
+    public class ItemSpawner : NetworkBehaviour {
+        [SerializeField] private ItemManager itemManager;
         [SerializeField] private int maxLocalItems;
         [SerializeField] private List<GameObject> spawnableItems = new List<GameObject>();
         [Header("Spawn Mode: 0-3")]
@@ -18,7 +20,14 @@ namespace RummageBattle {
         [Header("Mode 2")]
         [SerializeField] private float r = 5;
 
-        void Start() {
+        public static ItemSpawner Instance { get; private set; }
+
+        private void Awake() {
+            Instance = this;  // create a variable containing an instance of this object
+                              //itemManager = new ItemManager();  // create an instance of the `ItemManager()`
+        }
+
+        public override void OnStartServer() {
             switch (spawnMode) {
                 case 0:
                     SpawnItemsRectArea(x, z);
@@ -38,16 +47,17 @@ namespace RummageBattle {
             }
         }
 
-        public void SpawnItemsRectArea(float x, float z) {
+
+        public void SpawnItemsRectArea(float a, float b) {
             Vector3 RandomPosition() {
-                x = Random.Range(-x / 2f, x / 2f);
-                z = Random.Range(-z / 2f, z / 2f);
-                Vector3 spawnPosition = new Vector3(x, 1f, z);
+                float x = Random.Range(-(a / 2f), a / 2f);
+                float z = Random.Range(-(b / 2f), b / 2f);
+                Vector3 spawnPosition = new Vector3(x, 0f, z);
                 return spawnPosition + transform.position;
             }
 
             for (int i = 0; i < maxLocalItems; i++) {
-                SpawnItem(spawnableItems, RandomPosition(), Random.rotation);
+                itemManager.SpawnItem(spawnableItems, RandomPosition(), Random.rotation);
             }
         }
 
@@ -60,7 +70,7 @@ namespace RummageBattle {
             }
 
             for (int i = 0; i < maxLocalItems; i++) {
-                SpawnItem(spawnableItems, RandomPosition(), Random.rotation);
+                itemManager.SpawnItem(spawnableItems, RandomPosition(), Random.rotation);
             }
         }
 
@@ -68,24 +78,24 @@ namespace RummageBattle {
             Vector3 RandomPosition() {
                 Vector2 random = Random.insideUnitCircle * (max - min);
                 random = random + random.normalized * min;
-                Vector3 spawnPosition = new Vector3(random.x, 1f, random.y);
+                Vector3 spawnPosition = new Vector3(random.x, 0f, random.y);
                 return spawnPosition + transform.position;
             }
 
             for (int i = 0; i < maxLocalItems; i++) {
-                SpawnItem(spawnableItems, RandomPosition(), Random.rotation);
+                itemManager.SpawnItem(spawnableItems, RandomPosition(), Random.rotation);
             }
         }
 
         public void SpawnItemsRadius(float r) {
             Vector3 RandomPosition() {
                 Vector2 random = Random.insideUnitCircle * r;
-                Vector3 spawnPosition = new Vector3(random.x, 1f, random.y);
+                Vector3 spawnPosition = new Vector3(random.x, 0f, random.y);
                 return spawnPosition + transform.position;
             }
 
             for (int i = 0; i < maxLocalItems; i++) {
-                SpawnItem(spawnableItems, RandomPosition(), Random.rotation);
+                itemManager.SpawnItem(spawnableItems, RandomPosition(), Random.rotation);
             }
         }
 
