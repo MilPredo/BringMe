@@ -55,11 +55,15 @@ namespace RummageBattle {
             colorR = Random.value;
             colorG = Random.value;
             colorB = Random.value;
+            if (isLocalPlayer) {
+                GetComponent<Player>().enabled = true;
+            } else {
+                GetComponent<Player>().enabled = false;
+            }
         }
 
         void Update() {
             GetComponent<Renderer>().material.color = new Color(colorR, colorG, colorB);
-            if (!isLocalPlayer) return;
             if (Input.GetMouseButtonDown(1)) {
                 CmdSpawnPrefab();
             }

@@ -18,6 +18,7 @@ namespace RummageBattle {
             colorG = Random.value;
             colorB = Random.value;
         }
+
         void Update() {
             color = new Color(colorR, colorG, colorB);
             GetComponent<Renderer>().material.color = color;
