@@ -2,10 +2,8 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
-namespace Mirror.Examples.Tanks
-{
-    public class TankGameManager : MonoBehaviour
-    {
+namespace Mirror.Examples.Tanks {
+    public class TankGameManager : MonoBehaviour {
         public int MinimumPlayersForGame = 1;
 
         public Tank LocalPlayer;
@@ -21,25 +19,18 @@ namespace Mirror.Examples.Tanks
         public bool IsGameOver;
         public List<Tank> players = new List<Tank>();
 
-        void Update()
-        {
-            if (NetworkManager.singleton.isNetworkActive)
-            {
+        void Update() {
+            if (NetworkManager.singleton.isNetworkActive) {
                 GameReadyCheck();
                 GameOverCheck();
 
-                if (LocalPlayer == null)
-                {
+                if (LocalPlayer == null) {
                     FindLocalTank();
-                }
-                else
-                {
+                } else {
                     ShowReadyMenu();
                     UpdateStats();
                 }
-            }
-            else
-            {
+            } else {
                 //Cleanup state once network goes offline
                 IsGameReady = false;
                 LocalPlayer = null;
@@ -47,8 +38,7 @@ namespace Mirror.Examples.Tanks
             }
         }
 
-        void ShowReadyMenu()
-        {
+        void ShowReadyMenu() {
             if (NetworkManager.singleton.mode == NetworkManagerMode.ServerOnly)
                 return;
 
@@ -58,35 +48,27 @@ namespace Mirror.Examples.Tanks
             StartPanel.SetActive(true);
         }
 
-        void GameReadyCheck()
-        {
-            if (!IsGameReady)
-            {
+        void GameReadyCheck() {
+            if (!IsGameReady) {
                 //Look for connections that are not in the player list
-                foreach (KeyValuePair<uint, NetworkIdentity> kvp in NetworkIdentity.spawned)
-                {
+                foreach (KeyValuePair<uint, NetworkIdentity> kvp in NetworkIdentity.spawned) {
                     Tank comp = kvp.Value.GetComponent<Tank>();
 
                     //Add if new
-                    if (comp != null && !players.Contains(comp))
-                    {
+                    if (comp != null && !players.Contains(comp)) {
                         players.Add(comp);
                     }
                 }
 
                 //If minimum connections has been check if they are all ready
-                if (players.Count >= MinimumPlayersForGame)
-                {
+                if (players.Count >= MinimumPlayersForGame) {
                     bool AllReady = true;
-                    foreach (Tank tank in players)
-                    {
-                        if (!tank.isReady)
-                        {
+                    foreach (Tank tank in players) {
+                        if (!tank.isReady) {
                             AllReady = false;
                         }
                     }
-                    if (AllReady)
-                    {
+                    if (AllReady) {
                         IsGameReady = true;
                         AllowTankMovement();
 
@@ -99,8 +81,7 @@ namespace Mirror.Examples.Tanks
             }
         }
 
-        void GameOverCheck()
-        {
+        void GameOverCheck() {
             if (!IsGameReady)
                 return;
 
@@ -109,10 +90,8 @@ namespace Mirror.Examples.Tanks
                 return;
 
             int alivePlayerCount = 0;
-            foreach (Tank tank in players)
-            {
-                if (!tank.isDead)
-                {
+            foreach (Tank tank in players) {
+                if (!tank.isDead) {
                     alivePlayerCount++;
 
                     //If there is only 1 player left alive this will end up being their name
@@ -120,16 +99,14 @@ namespace Mirror.Examples.Tanks
                 }
             }
 
-            if (alivePlayerCount == 1)
-            {
+            if (alivePlayerCount == 1) {
                 IsGameOver = true;
                 GameOverPanel.SetActive(true);
                 DisallowTankMovement();
             }
         }
 
-        void FindLocalTank()
-        {
+        void FindLocalTank() {
             //Check to see if the player is loaded in yet
             if (ClientScene.localPlayer == null)
                 return;
@@ -137,31 +114,25 @@ namespace Mirror.Examples.Tanks
             LocalPlayer = ClientScene.localPlayer.GetComponent<Tank>();
         }
 
-        void UpdateStats()
-        {
+        void UpdateStats() {
             HealthText.text = LocalPlayer.health.ToString();
             ScoreText.text = LocalPlayer.score.ToString();
         }
 
-        public void ReadyButtonHandler()
-        {
+        public void ReadyButtonHandler() {
             LocalPlayer.SendReadyToServer(PlayerNameText.text);
         }
 
         //All players are ready and game has started. Allow players to move.
-        void AllowTankMovement()
-        {
-            foreach (Tank tank in players)
-            {
+        void AllowTankMovement() {
+            foreach (Tank tank in players) {
                 tank.allowMovement = true;
             }
         }
 
         //Game is over. Prevent movement
-        void DisallowTankMovement()
-        {
-            foreach (Tank tank in players)
-            {
+        void DisallowTankMovement() {
+            foreach (Tank tank in players) {
                 tank.allowMovement = false;
             }
         }

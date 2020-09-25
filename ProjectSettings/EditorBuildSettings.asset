@@ -6,12 +6,12 @@ EditorBuildSettings:
   serializedVersion: 2
   m_Scenes:
   - enabled: 1
-    path: Assets/BringMe2/Scenes/MainMenu.unity
+    path: Assets/Resources/Scenes/MainMenu.unity
     guid: 9b6b0220e21f92f40ace42acc0c1a8a4
   - enabled: 1
-    path: Assets/BringMe2/Scenes/Room.unity
+    path: Assets/Resources/Scenes/Room.unity
     guid: 8ec8891ed67f2904c9aad43396bbeadf
   - enabled: 1
-    path: Assets/BringMe2/Scenes/Game.unity
+    path: Assets/Resources/Scenes/Game.unity
     guid: 4722f2ae68d3bce43956e72577817cc0
   m_configObjects: {}
