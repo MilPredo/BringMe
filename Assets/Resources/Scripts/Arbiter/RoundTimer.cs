@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 
 namespace RummageBattle {
-    
+
     public class RoundTimer : MonoBehaviour {
 
         private bool isRunning = false;
@@ -12,36 +12,35 @@ namespace RummageBattle {
         [SerializeField] RoundManager roundManager;
 
         private void Awake() {
-            this.roundManager = gameObject.GetComponent<RoundManager>();
+            roundManager = gameObject.GetComponent<RoundManager>();
         }
+        //Transferred to RoundManager, script no longer needed
 
-        private void Update() {
-            this.lastTimerUpdate += Time.deltaTime;
-            if (this.isRunning == true && this.roundManager.CurrentRoundTime > 0) {
-                if (this.lastTimerUpdate > 1f) {
-                    this.roundManager.DecreaseCurrentRoundTime();
-                    this.lastTimerUpdate = 0f;
-
-                    if (this.roundManager.CurrentRoundTime == 0) {
-                        this.StopRoundTimer();
-                        
-                        if (this.roundManager.CurrentRound < this.roundManager.MaxRound)  {
-                            this.roundManager.IncreaseRound();
-                            this.roundManager.StartFreezeTime();
-                        }
-                    }
-
-                }
-                Debug.Log($"Round Timer: isRunning({this.isRunning})");
-            }
-        }
+        // private void Update() {
+        //     if (!isRunning) return;
+        //     lastTimerUpdate += Time.deltaTime;
+        //     if (roundManager.CurrentRoundTime > 0) {
+        //         if (lastTimerUpdate > 1f) {
+        //             roundManager.DecreaseCurrentRoundTime();
+        //             lastTimerUpdate = 0f;
+        //             if (roundManager.CurrentRoundTime == 0) {
+        //                 StopRoundTimer();
+        //                 if (roundManager.CurrentRound < roundManager.MaxRound) {
+        //                     roundManager.IncreaseRound();
+        //                     roundManager.StartFreezeTime();
+        //                 }
+        //             }
+        //         }
+        //         Debug.Log($"Round Timer: isRunning({isRunning})");
+        //     }
+        // }
 
         public void StartRoundTimer() {
-            this.isRunning = true;
+            isRunning = true;
         }
 
         public void StopRoundTimer() {
-            this.isRunning = false;
+            isRunning = false;
         }
     }
 }

@@ -13,9 +13,31 @@ namespace RummageBattle {
         }
 
         void Update() {
-            // foreach (KeyValuePair<uint, NetworkIdentity> kvp in NetworkIdentity.spawned)
+            //Look for connections that are not in the player list
+            foreach (KeyValuePair<uint, NetworkIdentity> kvp in NetworkIdentity.spawned) {
+                Player newPlayer = kvp.Value.GetComponent<Player>();
+
+                //Add if new
+                if (newPlayer != null && !players.Contains(newPlayer)) {
+                    players.Add(newPlayer);
+                }
+            }
+
+            players.ForEach(Debug.Log);
+            // foreach (Player player in players) {
+            //     Debug.Log("ID: " + player.GetComponent<NetworkIdentity>().netId);
+            // }
+        }
+
+        public void FreezePlayers() {
             foreach (Player player in players) {
-                Debug.Log("ID: " + player.GetComponent<NetworkIdentity>().netId);
+                player.Freeze();
+            }
+        }
+
+        public void UnFreezePlayers() {
+            foreach (Player player in players) {
+                player.UnFreeze();
             }
         }
 

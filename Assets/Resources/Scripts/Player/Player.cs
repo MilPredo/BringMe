@@ -23,32 +23,6 @@ namespace RummageBattle {
         private float directionY;
         private Vector3 camVel = Vector3.zero;
 
-        private void Move() {
-            direction = new Vector3(Input.GetAxis("Horizontal"), 0f, Input.GetAxis("Vertical"));
-            direction = Vector3.ClampMagnitude(direction, 1f);
-        }
-
-        void Jump() {
-            if (Input.GetKeyDown(KeyCode.Space) && GetComponent<CharacterController>().isGrounded) {
-                //player.velocity += Vector3.up * 10f;
-                directionY = 2f;
-            }
-            directionY -= -Physics.gravity.y * Time.deltaTime;
-            direction.y = directionY;
-        }
-
-        void LookAtMouse() {
-            Vector3 lookAt = transform.forward;
-            Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
-            Plane hPlane = new Plane(Vector3.up, -transform.position.y);
-            float distance = 0;
-            if (hPlane.Raycast(ray, out distance)) {
-                lookAt = ray.GetPoint(distance);
-                lookAt.y = transform.position.y;
-            }
-            transform.LookAt(lookAt);
-        }
-
         void Start() {
             playerManager = GameObject.FindObjectOfType<PlayerManager>();
             powerup = GameObject.FindObjectOfType<Powerup>();
@@ -74,6 +48,32 @@ namespace RummageBattle {
             Jump();
             LookAtMouse();
             UsePowerup();
+        }
+
+        private void Move() {
+            direction = new Vector3(Input.GetAxis("Horizontal"), 0f, Input.GetAxis("Vertical"));
+            direction = Vector3.ClampMagnitude(direction, 1f);
+        }
+
+        void Jump() {
+            if (Input.GetKeyDown(KeyCode.Space) && GetComponent<CharacterController>().isGrounded) {
+                //player.velocity += Vector3.up * 10f;
+                directionY = 2f;
+            }
+            directionY -= -Physics.gravity.y * Time.deltaTime;
+            direction.y = directionY;
+        }
+
+        void LookAtMouse() {
+            Vector3 lookAt = transform.forward;
+            Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
+            Plane hPlane = new Plane(Vector3.up, -transform.position.y);
+            float distance = 0;
+            if (hPlane.Raycast(ray, out distance)) {
+                lookAt = ray.GetPoint(distance);
+                lookAt.y = transform.position.y;
+            }
+            transform.LookAt(lookAt);
         }
 
         private void UsePowerup() {

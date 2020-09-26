@@ -7,6 +7,7 @@ namespace RummageBattle {
         public Arbiter arbiter;
 
         void Start() {
+            arbiter = FindObjectOfType<Arbiter>();
         }
 
         void Update() {

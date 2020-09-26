@@ -20,107 +20,107 @@ namespace RummageBattle {
 
 
         public void SetRoundUI(int round) {
-            if (this.roundUI)
-                this.roundUI.text = round.ToString();
+            if (roundUI)
+                roundUI.text = round.ToString();
         }
 
         public void SetRoundTimeUI(int roundTime) {
-            if (this.roundTimeUI)
-                this.roundTimeUI.text = this.calculateStringTime(roundTime);
+            if (roundTimeUI)
+                roundTimeUI.text = CalculateStringTime(roundTime);
         }
 
         public void SetTargetCountUI(int targetCount) {
             string strCount = targetCount < 10 ? $"0{ targetCount }" : targetCount.ToString();
-            if (this.targetCountUI)
-                this.targetCountUI.text = $"ITEMS LEFT: ${strCount}";
+            if (targetCountUI)
+                targetCountUI.text = $"ITEMS LEFT: ${strCount}";
         }
 
         public void SetTargetItemUI(string targetItem) {
-            if (this.targetItemUI)
-                this.targetItemUI.text = $"TARGET ITEM: {targetItem}";
+            if (targetItemUI)
+                targetItemUI.text = $"TARGET ITEM: {targetItem}";
         }
 
         public void SetFreezeTimeUI(int freezeTime) {
-            if (this.freezeTimeUI)
-                this.freezeTimeUI.text = this.calculateStringTime(freezeTime);
+            if (freezeTimeUI)
+                freezeTimeUI.text = CalculateStringTime(freezeTime);
         }
 
         public void SetFreezeRoundUI(int currentRound) {
-            if (this.freezeRoundUI)
-                this.freezeRoundUI.text = $"ROUND {currentRound}";
+            if (freezeRoundUI)
+                freezeRoundUI.text = $"ROUND {currentRound}";
         }
 
         public void ShowRoundLayout() {
-            if (this.roundLayout)
-                this.roundLayout.SetActive(true);
+            if (roundLayout)
+                roundLayout.SetActive(true);
         }
 
         public void ShowRoundUI() {
-            if (this.roundUI && this.roundUI.text == "")
-                this.SetRoundUI(1);
+            if (roundUI && roundUI.text == "")
+                SetRoundUI(1);
         }
 
         public void ShowRoundTimeUI() {
-            if (this.roundTimeUI && this.roundTimeUI.text == "")
-                this.SetRoundTimeUI(120);
+            if (roundTimeUI && roundTimeUI.text == "")
+                SetRoundTimeUI(120);
         }
 
         public void ShowTargetCountUI() {
-            if (this.targetCountUI && this.targetCountUI.text == "")
-                this.SetTargetCountUI(3);
+            if (targetCountUI && targetCountUI.text == "")
+                SetTargetCountUI(3);
         }
 
         public void ShowTargetItemUI() {
-            if (this.targetItemUI && this.targetItemUI.text == "")
-                this.SetTargetItemUI("Excalibur");
+            if (targetItemUI && targetItemUI.text == "")
+                SetTargetItemUI("Excalibur");
         }
 
         public void ShowFreezeTimeLayout() {
-            if (this.freezeTimeLayout)
-                this.freezeTimeLayout.SetActive(true);
+            if (freezeTimeLayout)
+                freezeTimeLayout.SetActive(true);
         }
 
         public void ShowFreezeTimeUI() {
-            if (this.freezeTimeUI && this.freezeTimeUI.text == "")
-                this.SetFreezeTimeUI(5);
+            if (freezeTimeUI && freezeTimeUI.text == "")
+                SetFreezeTimeUI(5);
         }
 
         public void HideRoundLayout() {
-            if (this.roundLayout)
-                this.roundLayout.SetActive(false);
+            if (roundLayout)
+                roundLayout.SetActive(false);
         }
 
         public void HideRoundUI() {
-            if (this.roundUI && this.roundUI.text != "")
-                this.roundUI.text = "";
+            if (roundUI && roundUI.text != "")
+                roundUI.text = "";
         }
 
         public void HideRoundTimeUI() {
-            if (this.roundTimeUI && this.roundTimeUI.text != "")
-                this.roundTimeUI.text = "";
+            if (roundTimeUI && roundTimeUI.text != "")
+                roundTimeUI.text = "";
         }
 
         public void HideTargetCountUI() {
-            if (this.targetCountUI && this.targetCountUI.text != "")
-                this.targetCountUI.text = "";
+            if (targetCountUI && targetCountUI.text != "")
+                targetCountUI.text = "";
         }
 
         public void HideTargetItemUI() {
-            if (this.targetItemUI && this.targetItemUI.text != "")
-                this.targetItemUI.text = "";
+            if (targetItemUI && targetItemUI.text != "")
+                targetItemUI.text = "";
         }
 
         public void HideFreezeTimeLayout() {
-            if (this.freezeTimeLayout)
-                this.freezeTimeLayout.SetActive(false);
+            if (freezeTimeLayout)
+                freezeTimeLayout.SetActive(false);
         }
 
         public void HideFreezeTimeUI() {
-            if (this.freezeTimeUI && this.freezeTimeUI.text != "")
-                this.freezeTimeUI.text = "";
+            if (freezeTimeUI && freezeTimeUI.text != "")
+                freezeTimeUI.text = "";
         }
 
-        private string calculateStringTime(int time) {
+        private string CalculateStringTime(int time) {
             int mins = 0;
             int secs = time;
 
