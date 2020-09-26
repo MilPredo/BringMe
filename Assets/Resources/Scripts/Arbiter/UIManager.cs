@@ -15,101 +15,107 @@ namespace RummageBattle {
 
         [Header("Preparation UI")]
         [SerializeField] private GameObject freezeTimeLayout;
+        [SerializeField] private TextMeshProUGUI freezeRoundUI;
         [SerializeField] private TextMeshProUGUI freezeTimeUI;
 
 
-        public void setRoundUI(int round) {
+        public void SetRoundUI(int round) {
             if (this.roundUI)
                 this.roundUI.text = round.ToString();
         }
 
-        public void setRoundTimeUI(int roundTime) {
+        public void SetRoundTimeUI(int roundTime) {
             if (this.roundTimeUI)
                 this.roundTimeUI.text = this.calculateStringTime(roundTime);
         }
 
-        public void setTargetCountUI(int targetCount) {
+        public void SetTargetCountUI(int targetCount) {
             string strCount = targetCount < 10 ? $"0{ targetCount }" : targetCount.ToString();
             if (this.targetCountUI)
                 this.targetCountUI.text = $"ITEMS LEFT: ${strCount}";
         }
 
-        public void setTargetItemUI(string targetItem) {
+        public void SetTargetItemUI(string targetItem) {
             if (this.targetItemUI)
                 this.targetItemUI.text = $"TARGET ITEM: {targetItem}";
         }
 
-        public void setFreezeTimeUI(int freezeTime) {
+        public void SetFreezeTimeUI(int freezeTime) {
             if (this.freezeTimeUI)
                 this.freezeTimeUI.text = this.calculateStringTime(freezeTime);
         }
 
-        public void showRoundLayout() {
+        public void SetFreezeRoundUI(int currentRound) {
+            if (this.freezeRoundUI)
+                this.freezeRoundUI.text = $"ROUND {currentRound}";
+        }
+
+        public void ShowRoundLayout() {
             if (this.roundLayout)
                 this.roundLayout.SetActive(true);
         }
 
-        public void showRoundUI() {
+        public void ShowRoundUI() {
             if (this.roundUI && this.roundUI.text == "")
-                this.setRoundUI(1);
+                this.SetRoundUI(1);
         }
 
-        public void showRoundTimeUI() {
+        public void ShowRoundTimeUI() {
             if (this.roundTimeUI && this.roundTimeUI.text == "")
-                this.setRoundTimeUI(120);
+                this.SetRoundTimeUI(120);
         }
 
-        public void showTargetCountUI() {
+        public void ShowTargetCountUI() {
             if (this.targetCountUI && this.targetCountUI.text == "")
-                this.setTargetCountUI(3);
+                this.SetTargetCountUI(3);
         }
 
-        public void showTargetItemUI() {
+        public void ShowTargetItemUI() {
             if (this.targetItemUI && this.targetItemUI.text == "")
-                this.setTargetItemUI("Excalibur");
+                this.SetTargetItemUI("Excalibur");
         }
 
-        public void showFreezeTimeLayout() {
+        public void ShowFreezeTimeLayout() {
             if (this.freezeTimeLayout)
                 this.freezeTimeLayout.SetActive(true);
         }
 
-        public void showFreezeTimeUI() {
+        public void ShowFreezeTimeUI() {
             if (this.freezeTimeUI && this.freezeTimeUI.text == "")
-                this.setFreezeTimeUI(5);
+                this.SetFreezeTimeUI(5);
         }
 
-        public void hideRoundLayout() {
+        public void HideRoundLayout() {
             if (this.roundLayout)
                 this.roundLayout.SetActive(false);
         }
 
-        public void hideRoundUI() {
+        public void HideRoundUI() {
             if (this.roundUI && this.roundUI.text != "")
                 this.roundUI.text = "";
         }
 
-        public void hideRoundTimeUI() {
+        public void HideRoundTimeUI() {
             if (this.roundTimeUI && this.roundTimeUI.text != "")
                 this.roundTimeUI.text = "";
         }
 
-        public void hideTargetCountUI() {
+        public void HideTargetCountUI() {
             if (this.targetCountUI && this.targetCountUI.text != "")
                 this.targetCountUI.text = "";
         }
 
-        public void hideTargetItemUI() {
+        public void HideTargetItemUI() {
             if (this.targetItemUI && this.targetItemUI.text != "")
                 this.targetItemUI.text = "";
         }
 
-        public void hideFreezeTimeLayout() {
+        public void HideFreezeTimeLayout() {
             if (this.freezeTimeLayout)
                 this.freezeTimeLayout.SetActive(false);
         }
 
-        public void hideFreezeTimeUI() {
+        public void HideFreezeTimeUI() {
             if (this.freezeTimeUI && this.freezeTimeUI.text != "")
                 this.freezeTimeUI.text = "";
         }

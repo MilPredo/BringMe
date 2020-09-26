@@ -11,14 +11,9 @@ namespace RummageBattle {
         public UIManager uiManager;
         public PlayerManager playerManager;
 
-        void Start() {
-
+        public override void OnStartServer() {
+            this.roundManager.StartFreezeTime(); // start game
         }
-
-        void Update() {
-
-        }
-
     }
 }
 
