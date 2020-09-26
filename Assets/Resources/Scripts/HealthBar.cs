@@ -1,8 +1,8 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using Mirror;
 using UnityEngine;
 using UnityEngine.UI;
-using Mirror;
 namespace RummageBattle {
     public class HealthBar : MonoBehaviour {
         private GameObject canvas;
@@ -10,7 +10,7 @@ namespace RummageBattle {
         // Start is called before the first frame update
         void Start() {
             canvas = GameObject.FindGameObjectWithTag("MainCanvas");
-            healthBar = GetComponentInChildren<Slider>();
+            healthBar = GetComponent<Slider>();
             if ((canvas == null) || (healthBar == null)) {
                 Debug.LogError("No canvas in the scene!");
                 Destroy(gameObject);
