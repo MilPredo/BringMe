@@ -32,7 +32,7 @@ namespace RummageBattle {
         public void SetTargetCountUI(int targetCount) {
             string strCount = targetCount < 10 ? $"0{ targetCount }" : targetCount.ToString();
             if (targetCountUI)
-                targetCountUI.text = $"ITEMS LEFT: ${strCount}";
+                targetCountUI.text = $"ITEMS LEFT: {strCount}";
         }
 
         public void SetTargetItemUI(string targetItem) {

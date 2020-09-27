@@ -19,21 +19,52 @@ namespace RummageBattle {
             if (!roundManager.freezeTimeFinished) {
                 playerManager.FreezePlayers();
                 StartFreezeTime();
+                targetItems = SelectRandomItems(3);
             } else {
                 playerManager.UnFreezePlayers();
                 StartRoundTime();
+                //check dropzone items 
             }
         }
 
+        private void CheckDropZone() {
+            if (itemsInDropZone.Count == 0) return;
+            foreach (Item item in itemsInDropZone) {
+                if (targetItems.Contains(item)) {
+
+                }
+            }
+        }
+
+        private bool oneTime = false;
+        private List<Item> SelectRandomItems(int count) {
+            List<Item> items = new List<Item>();
+            for (int i = 0; i < count; i++) {
+                items.Add(SelectRandomItem());
+            }
+            oneTime = true;
+            return items;
+        }
+
         private Item SelectRandomItem() {
-            return itemManager.items[Random.Range(0, itemManager.items.Count)];
+            int random = Random.Range(0, itemManager.items.Count);
+            return itemManager.items[random];
         }
 
         public void OnGUI() { //originally from RoundManager script. may not look the same but the logic is based from RoundManager.cs
             uiManager.SetRoundUI(roundManager.CurrentRound);
-            uiManager.SetRoundTimeUI(Mathf.RoundToInt(roundManager.CurrentRoundTime));
-            uiManager.SetFreezeTimeUI(Mathf.RoundToInt(roundManager.CurrentFreezeTime));
-            uiManager.SetFreezeRoundUI(Mathf.RoundToInt(roundManager.CurrentRound));
+            uiManager.SetRoundTimeUI(Mathf.CeilToInt(roundManager.CurrentRoundTime));
+            uiManager.SetFreezeTimeUI(Mathf.CeilToInt(roundManager.CurrentFreezeTime));
+            uiManager.SetFreezeRoundUI(Mathf.CeilToInt(roundManager.CurrentRound));
+            uiManager.SetTargetCountUI(targetItems.Count);
+            string targetItemsString = "";
+            foreach (Item item in targetItems) {
+                targetItemsString += item.itemName + "\n";
+            }
+            uiManager.SetTargetItemUI(
+                "Target Items:\n" +
+                targetItemsString
+                );
         }
 
         private bool StartFreezeTime() { //originally from FreezeTimer script. may not look the same but the logic is based from FreezeTimer.cs

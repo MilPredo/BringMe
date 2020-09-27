@@ -17,6 +17,7 @@ namespace RummageBattle {
                 return;
             }
             transform.SetParent(canvas.transform);
+            transform.SetAsFirstSibling();
         }
 
         public void SetPosition(Vector3 position) {

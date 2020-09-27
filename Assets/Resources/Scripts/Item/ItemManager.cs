@@ -7,9 +7,11 @@ namespace RummageBattle {
         public int maxWorldItems = 500;
         public List<Item> items = new List<Item>(); //items in world
 
+        void Update() {
+            //Debug.Log(items.Count + "/" + maxWorldItems);
+        }
 
         public GameObject SpawnItem(List<GameObject> spawnableItems, Vector3 position, Quaternion rotation) {
-            //Debug.Log(items.Count + "/" + maxWorldItems);
             if (spawnableItems.Count == 0) return null;
             if (items.Count >= maxWorldItems) return null;
             GameObject toSpawn = spawnableItems[Random.Range(0, spawnableItems.Count)];

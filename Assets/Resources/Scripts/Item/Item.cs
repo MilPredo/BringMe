@@ -14,11 +14,13 @@ namespace RummageBattle {
         public Player lastTouch { get; private set; }
         [SerializeField] private GameObject healthBarGameObject;
         [SerializeField] private HealthBar healthBar;
+        private ItemManager itemManager;
 
         void Start() {
             colorR = Random.value;
             colorG = Random.value;
             colorB = Random.value;
+            itemManager = FindObjectOfType<ItemManager>();
             healthBarGameObject = Instantiate((GameObject)Resources.Load("Prefabs/HealthBar"));
             healthBar = healthBarGameObject.GetComponent<HealthBar>();
         }
@@ -31,10 +33,10 @@ namespace RummageBattle {
             }
             GetComponent<Renderer>().material.color = color;
             if (health <= 0) {
+                itemManager.items.Remove(gameObject.GetComponent<Item>());
                 Destroy(gameObject);
             }
         }
-
 
         public void SetPosition(Vector3 position) {
             transform.position = position;

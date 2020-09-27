@@ -9,7 +9,7 @@ namespace RummageBattle {
         //private FreezeTimer freezeTimer;
 
         private int maxRound = 3;
-        private float maxRoundTime = 5.0f;
+        private float maxRoundTime = 60.0f;
         private float maxFreezeTime = 5.0f;
 
         [SyncVar] private int currentRound = 1;
