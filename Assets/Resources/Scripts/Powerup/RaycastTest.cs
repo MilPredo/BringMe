@@ -4,7 +4,7 @@ using UnityEngine;
 using Mirror;
 namespace RummageBattle {
     public class RaycastTest : NetworkBehaviour {
-        public Punch powerup = new Punch();
+        public Punch powerup;
         public ItemManager itemManager;
         void HandleInputs() {
             if (Input.GetMouseButtonDown(0)) {
