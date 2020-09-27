@@ -8,7 +8,7 @@ namespace RummageBattle {
         public List<Item> items = new List<Item>(); //items in world
 
         void Update() {
-            //Debug.Log(items.Count + "/" + maxWorldItems);
+            Debug.Log(items.Count + "/" + maxWorldItems);
         }
 
         public GameObject SpawnItem(List<GameObject> spawnableItems, Vector3 position, Quaternion rotation) {

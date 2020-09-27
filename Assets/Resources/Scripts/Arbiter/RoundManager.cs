@@ -86,6 +86,14 @@ namespace RummageBattle {
             return roundTimeFinished;
         }
 
+        public void StopRoundTime() {
+            currentRoundTime = maxRoundTime; //reset timer
+            isRoundTimerActive = false; //stop countdown
+            roundTimeFinished = true;
+            freezeTimeFinished = false;
+            currentRound++;
+        }
+
         private void StartFreezeTimer() { //originally from FreezeTimer script. may not look the same but the logic is based from FreezeTimer.cs
             if (currentRound <= maxRound) { //check remaining rounds
                 freezeTimeFinished = false;
@@ -113,6 +121,8 @@ namespace RummageBattle {
                 }
             }
         }
+
+
 
         // public void IncreaseRound() {
         //     currentRound += 1;

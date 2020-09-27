@@ -48,7 +48,58 @@ namespace RummageBattle {
             Jump();
             LookAtMouse();
             UsePowerup();
+            PickupItem();
         }
+
+        //--------------------------------------------OLD CODE-V--------------------------------------------------
+        //will be replaced with better one
+        Vector3 directionVec = Vector3.zero;
+        Vector3 lastDirectionVec = Vector3.zero;
+        Vector3 deltaDirVec = Vector3.zero;
+        GameObject pickedItem = null;
+        Rigidbody pickedItemRB = null;
+        RaycastHit hit = new RaycastHit();
+
+        void MoveItem() { //run server side movement.
+            if (pickedItemRB != null) {
+                Vector3 targetPoint = (transform.forward * 2f + transform.position + new Vector3(0, 1f, 0));
+                Vector3 itemPosition = pickedItemRB.position;
+                directionVec = (targetPoint - itemPosition);
+                deltaDirVec = directionVec - lastDirectionVec;
+                pickedItemRB.AddForce((directionVec * pickedItemRB.mass - (pickedItemRB.velocity * 0.1f)) * 20f);
+                lastDirectionVec = directionVec;
+            }
+        }
+
+        void SetItem() {
+            if (hit.rigidbody != null) {
+                pickedItem = hit.transform.gameObject;
+                pickedItemRB = hit.rigidbody;
+                pickedItem.GetComponent<Item>().lastTouch = GetComponent<Player>();
+            }
+        }
+
+        void SphereCast() {
+            Physics.SphereCast(transform.position, 1.0f, transform.forward, out hit, 4f);
+        }
+
+        void PickupItem() {
+            SphereCast();
+            Debug.DrawRay(transform.position, transform.forward * hit.distance, Color.yellow);
+
+            if (Input.GetMouseButtonDown(0)) { //press e, ray cast
+                SetItem();
+            }
+
+            if (Input.GetMouseButton(0)) { //
+                MoveItem();
+            }
+
+            if (Input.GetMouseButtonUp(0)) {
+                pickedItemRB = null;
+            }
+        }
+        //--------------------------------------------OLD CODE-^--------------------------------------------------
 
         private void Move() {
             direction = new Vector3(Input.GetAxis("Horizontal"), 0f, Input.GetAxis("Vertical"));

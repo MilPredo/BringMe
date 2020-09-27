@@ -19,36 +19,44 @@ namespace RummageBattle {
             if (!roundManager.freezeTimeFinished) {
                 playerManager.FreezePlayers();
                 StartFreezeTime();
-                targetItems = SelectRandomItems(3);
             } else {
                 playerManager.UnFreezePlayers();
+                SelectRandomItems(3);
                 StartRoundTime();
                 //check dropzone items 
+                CheckDropZone();
+                if (targetItems.Count == 0) {
+                    oneTime = false;
+                    roundManager.StopRoundTime();
+                }
             }
         }
 
         private void CheckDropZone() {
             if (itemsInDropZone.Count == 0) return;
-            foreach (Item item in itemsInDropZone) {
-                if (targetItems.Contains(item)) {
-
+            foreach (Item targetItem in targetItems) {
+                foreach (Item itemInDropZone in itemsInDropZone) {
+                    if (itemInDropZone.itemName == targetItem.itemName) {
+                        targetItems.Remove(targetItem);
+                        itemsInDropZone.Remove(itemInDropZone);
+                        Debug.Log("Player: " + itemInDropZone.lastTouch.playerName + " Successfully dropped " + itemInDropZone.itemName + " into dropzone!");
+                        itemInDropZone.ApplyDamage(100);
+                    }
                 }
             }
         }
 
         private bool oneTime = false;
-        private List<Item> SelectRandomItems(int count) {
-            List<Item> items = new List<Item>();
+        private void SelectRandomItems(int count) {
+            if (oneTime) return;
+            //copy list
+            List<Item> temp = new List<Item>(itemManager.items);
             for (int i = 0; i < count; i++) {
-                items.Add(SelectRandomItem());
+                int randIndex = Random.Range(0, temp.Count);
+                targetItems.Add(temp[randIndex]);
+                temp.RemoveAt(randIndex);
             }
             oneTime = true;
-            return items;
-        }
-
-        private Item SelectRandomItem() {
-            int random = Random.Range(0, itemManager.items.Count);
-            return itemManager.items[random];
         }
 
         public void OnGUI() { //originally from RoundManager script. may not look the same but the logic is based from RoundManager.cs

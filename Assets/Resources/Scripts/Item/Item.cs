@@ -11,7 +11,7 @@ namespace RummageBattle {
         private Color color;
         [SyncVar]
         private float colorR, colorG, colorB;
-        public Player lastTouch { get; private set; }
+        public Player lastTouch;
         [SerializeField] private GameObject healthBarGameObject;
         [SerializeField] private HealthBar healthBar;
         private ItemManager itemManager;
