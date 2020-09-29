@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public class CameraController : MonoBehaviour {
-    private float zoom = 10f;
+    [SerializeField] private float zoom = 10f;
     [SerializeField] private float minZoom = 5f;
     [SerializeField] private float maxZoom = 10f;
     private float targetZoom = 10f;

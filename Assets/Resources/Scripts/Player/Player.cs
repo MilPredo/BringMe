@@ -81,11 +81,17 @@ namespace RummageBattle {
                     hitted.rigidbody.useGravity = false;
                     Vector3 targetPoint = (transform.forward * 2f + transform.position + new Vector3(0, 1f, 0));
                     hitted.rigidbody.velocity = (targetPoint - hitted.transform.position) * multiplier;
+                    Quaternion angDiff = (transform.rotation * Quaternion.Inverse(hitted.rigidbody.rotation));
+                    float angle; Vector3 axis;
+                    angDiff.ToAngleAxis(out angle, out axis);
+                    if (float.IsInfinity(axis.x))
+                        return;
+                    if (angle > 180f)
+                        angle -= 360f;
+                    hitted.rigidbody.angularVelocity = (Mathf.Deg2Rad * angle) * axis.normalized * multiplier;
                 }
             }
         }
-
-
 
         void Jump() {
             if (Input.GetKeyDown(KeyCode.Space) && GetComponent<CharacterController>().isGrounded) {
