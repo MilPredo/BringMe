@@ -41,6 +41,7 @@ namespace RummageBattle {
                         itemsInDropZone.Remove(itemInDropZone);
                         Debug.Log("Player: " + itemInDropZone.lastTouch.playerName + " Successfully dropped " + itemInDropZone.itemName + " into dropzone!");
                         itemInDropZone.ApplyDamage(100);
+                        return;
                     }
                 }
             }

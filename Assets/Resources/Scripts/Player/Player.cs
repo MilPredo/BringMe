@@ -42,7 +42,7 @@ namespace RummageBattle {
             GetComponent<Renderer>().material.color = new Color(colorR, colorG, colorB);
             if (isFrozen) return;
             if (Input.GetKeyDown(KeyCode.G)) {
-                //Drop Powerup
+                //TODO Drop Powerup
             }
             Move();
             Jump();
@@ -51,13 +51,21 @@ namespace RummageBattle {
             PickupItem();
         }
 
+        private void Move() {
+            direction = new Vector3(Input.GetAxis("Horizontal"), 0f, Input.GetAxis("Vertical"));
+            direction = Vector3.ClampMagnitude(direction, 1f);
+            direction = Quaternion.Euler(0, Camera.main.transform.parent.transform.GetComponent<CameraController>().camRot.y, 0f) * direction;
+        }
+
         RaycastHit hitted = new RaycastHit();
         float multiplier = 10f;
         void PickupItem() {
             if (Input.GetMouseButtonDown(0)) {
                 Physics.SphereCast(transform.position, 1f, transform.forward, out hitted, 4f);
-                if (hitted.collider.GetComponent<Item>() != null) {
-                    hitted.collider.GetComponent<Item>().lastTouch = GetComponent<Player>();
+                if (hitted.collider != null) {
+                    if (hitted.collider.GetComponent<Item>() != null) {
+                        hitted.collider.GetComponent<Item>().lastTouch = GetComponent<Player>();
+                    }
                 }
             }
 
@@ -77,10 +85,7 @@ namespace RummageBattle {
             }
         }
 
-        private void Move() {
-            direction = new Vector3(Input.GetAxis("Horizontal"), 0f, Input.GetAxis("Vertical"));
-            direction = Vector3.ClampMagnitude(direction, 1f);
-        }
+
 
         void Jump() {
             if (Input.GetKeyDown(KeyCode.Space) && GetComponent<CharacterController>().isGrounded) {
@@ -127,7 +132,7 @@ namespace RummageBattle {
             if (isFrozen) return;
             if (!isLocalPlayer) return;
             GetComponent<CharacterController>().Move(direction * Time.deltaTime * speed);
-            Camera.main.transform.position = Vector3.SmoothDamp(Camera.main.transform.position, transform.position + new Vector3(0, 10, -10), ref camVel, 0.1f);
+            Camera.main.transform.parent.transform.position = Vector3.SmoothDamp(Camera.main.transform.parent.transform.position, transform.position, ref camVel, 0.1f);
         }
 
         void OnDestroy() {
