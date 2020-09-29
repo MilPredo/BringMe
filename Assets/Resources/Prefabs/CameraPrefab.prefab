@@ -57,7 +57,7 @@ Camera:
     height: 1
   near clip plane: 0.3
   far clip plane: 1000
-  field of view: 60
+  field of view: 20
   orthographic: 0
   orthographic size: 5
   m_Depth: -1
@@ -128,6 +128,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   minZoom: 5
-  maxZoom: 20
-  targetZoom: 10
-  time: 0.1
+  maxZoom: 100
+  camRot: {x: 45, y: 45}
+  targetCamRot: {x: 45, y: 45}
+  rotVel: {x: 0, y: 0}
