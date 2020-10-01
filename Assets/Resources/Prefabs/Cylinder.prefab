@@ -11,11 +11,11 @@ GameObject:
   - component: {fileID: 5724479279457815076}
   - component: {fileID: 6993508400607302435}
   - component: {fileID: 838057359354163200}
-  - component: {fileID: 7728697299617660670}
+  - component: {fileID: -6914843474906113698}
+  - component: {fileID: 8002887295521130082}
   - component: {fileID: 6962343966820396560}
   - component: {fileID: 5117297862076617114}
   - component: {fileID: 7476195393461855135}
-  - component: {fileID: 8002887295521130082}
   m_Layer: 0
   m_Name: Cylinder
   m_TagString: Untagged
@@ -86,8 +86,8 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
---- !u!136 &7728697299617660670
-CapsuleCollider:
+--- !u!64 &-6914843474906113698
+MeshCollider:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
@@ -96,10 +96,26 @@ CapsuleCollider:
   m_Material: {fileID: 0}
   m_IsTrigger: 0
   m_Enabled: 1
-  m_Radius: 0.5000001
-  m_Height: 2
-  m_Direction: 1
-  m_Center: {x: 0.000000059604645, y: 0, z: -0.00000008940697}
+  serializedVersion: 4
+  m_Convex: 1
+  m_CookingOptions: -1
+  m_Mesh: {fileID: 10206, guid: 0000000000000000e000000000000000, type: 0}
+--- !u!54 &8002887295521130082
+Rigidbody:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7320474932060412670}
+  serializedVersion: 2
+  m_Mass: 1
+  m_Drag: 0
+  m_AngularDrag: 0.05
+  m_UseGravity: 1
+  m_IsKinematic: 0
+  m_Interpolate: 0
+  m_Constraints: 0
+  m_CollisionDetection: 0
 --- !u!114 &6962343966820396560
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -150,19 +166,6 @@ MonoBehaviour:
   syncInterval: 0.1
   itemName: Cylinder
   health: 100
---- !u!54 &8002887295521130082
-Rigidbody:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7320474932060412670}
-  serializedVersion: 2
-  m_Mass: 1
-  m_Drag: 0
-  m_AngularDrag: 0.05
-  m_UseGravity: 1
-  m_IsKinematic: 0
-  m_Interpolate: 0
-  m_Constraints: 0
-  m_CollisionDetection: 0
+  lastTouch: {fileID: 0}
+  healthBarGameObject: {fileID: 0}
+  healthBar: {fileID: 0}

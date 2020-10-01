@@ -136,8 +136,10 @@ MonoBehaviour:
   syncMode: 0
   syncInterval: 0.1
   playerName: Pedro
+  health: 0
   playerManager: {fileID: 0}
-  speed: 20
+  walkSpeed: 1.4
+  runSpeed: 8.5
   powerup: {fileID: 3823957928226234125, guid: 87f496a28c677c34fa88fb579a6aaa45, type: 3}
   isReady: 1
   isFrozen: 0

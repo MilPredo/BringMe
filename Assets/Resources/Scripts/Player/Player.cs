@@ -1,8 +1,8 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
-using UnityEngine;
-using TMPro;
 using Mirror;
+using TMPro;
+using UnityEngine;
 namespace RummageBattle {
     [RequireComponent(typeof(CharacterController), typeof(NetworkTransform), typeof(NetworkIdentity))]
     public class Player : NetworkBehaviour, IDamageable<float>, IEliminable, IFreezeable, ITeleportable {
@@ -12,7 +12,8 @@ namespace RummageBattle {
         private Color color;
         [SerializeField] public PlayerManager playerManager;
         [SyncVar] private float colorR, colorG, colorB;
-        [SerializeField] private float speed = 20f;
+        [SerializeField] private float walkSpeed = 1.4f;
+        [SerializeField] private float runSpeed = 8.5f;
         //private Item item;
         [SerializeField] private Powerup powerup;
         [SyncVar] public bool isReady = false;
@@ -51,9 +52,17 @@ namespace RummageBattle {
             PickupItem();
         }
 
+        void FixedUpdate() {
+            if (isFrozen) return;
+            if (!isLocalPlayer) return;
+            GetComponent<CharacterController>().Move(direction * Time.fixedDeltaTime);
+            Camera.main.transform.parent.transform.position = Vector3.SmoothDamp(Camera.main.transform.parent.transform.position, transform.position, ref camVel, 0.1f);
+        }
+
         private void Move() {
             direction = new Vector3(Input.GetAxis("Horizontal"), 0f, Input.GetAxis("Vertical"));
-            direction = Vector3.ClampMagnitude(direction, 1f);
+            direction = Vector3.ClampMagnitude(direction, 1f) * (Input.GetKey(KeyCode.LeftShift) ? runSpeed : walkSpeed);
+            Debug.Log(direction.magnitude);
             direction = Quaternion.Euler(0, Camera.main.transform.parent.transform.GetComponent<CameraController>().camRot.y, 0f) * direction;
         }
 
@@ -82,7 +91,8 @@ namespace RummageBattle {
                     Vector3 targetPoint = (transform.forward * 2f + transform.position + new Vector3(0, 1f, 0));
                     hitted.rigidbody.velocity = (targetPoint - hitted.transform.position) * multiplier;
                     Quaternion angDiff = (transform.rotation * Quaternion.Inverse(hitted.rigidbody.rotation));
-                    float angle; Vector3 axis;
+                    float angle;
+                    Vector3 axis;
                     angDiff.ToAngleAxis(out angle, out axis);
                     if (float.IsInfinity(axis.x))
                         return;
@@ -134,12 +144,7 @@ namespace RummageBattle {
             return null;
         }
 
-        void FixedUpdate() {
-            if (isFrozen) return;
-            if (!isLocalPlayer) return;
-            GetComponent<CharacterController>().Move(direction * Time.deltaTime * speed);
-            Camera.main.transform.parent.transform.position = Vector3.SmoothDamp(Camera.main.transform.parent.transform.position, transform.position, ref camVel, 0.1f);
-        }
+
 
         void OnDestroy() {
             playerManager.players.Remove(GetComponent<Player>());

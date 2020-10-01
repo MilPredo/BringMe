@@ -12,7 +12,6 @@ public class CameraController : MonoBehaviour {
 
     void Start() {
         transform.eulerAngles = new Vector3(0f, 45f, 0f);
-        //Camera.main.transform.localRotation = Quaternion.Euler(45f, 0f, 0f);
         Debug.Log(Camera.main.transform.worldToLocalMatrix.MultiplyVector(transform.forward));
         Camera.main.transform.localPosition = -transform.worldToLocalMatrix.MultiplyVector(Camera.main.transform.forward) * zoom;
     }
@@ -49,6 +48,5 @@ public class CameraController : MonoBehaviour {
         targetPosition = -Camera.main.transform.forward * targetZoom;
         zoom = Mathf.SmoothDamp(zoom, targetZoom, ref vel, time);
         Camera.main.transform.localPosition = -transform.worldToLocalMatrix.MultiplyVector(Camera.main.transform.forward) * zoom; //-Camera.main.transform.forward * zoom;
-
     }
 }

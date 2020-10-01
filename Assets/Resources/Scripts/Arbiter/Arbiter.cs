@@ -18,6 +18,7 @@ namespace RummageBattle {
             //start rounds
             if (!roundManager.freezeTimeFinished) {
                 playerManager.FreezePlayers();
+                //Time.timeScale = 0.5f;
                 StartFreezeTime();
             } else {
                 playerManager.UnFreezePlayers();

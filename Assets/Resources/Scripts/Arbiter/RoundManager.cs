@@ -87,70 +87,34 @@ namespace RummageBattle {
         }
 
         public void StopRoundTime() {
-            currentRoundTime = maxRoundTime; //reset timer
-            isRoundTimerActive = false; //stop countdown
+            currentRoundTime = maxRoundTime;
+            isRoundTimerActive = false;
             roundTimeFinished = true;
             freezeTimeFinished = false;
             currentRound++;
         }
 
-        private void StartFreezeTimer() { //originally from FreezeTimer script. may not look the same but the logic is based from FreezeTimer.cs
-            if (currentRound <= maxRound) { //check remaining rounds
+        private void StartFreezeTimer() {
+            if (currentRound <= maxRound) {
                 freezeTimeFinished = false;
-                currentFreezeTime -= Time.deltaTime;
-                //Debug.Log($"Freeze Timer: {currentFreezeTime}");
-                if (currentFreezeTime <= 0) { //check if timer reached zero
-                    currentFreezeTime = maxFreezeTime; //reset timer
-                    isFreezeTimerActive = false; //stop countdown
+                currentFreezeTime -= Time.unscaledDeltaTime;
+                if (currentFreezeTime <= 0) {
+                    currentFreezeTime = maxFreezeTime;
+                    isFreezeTimerActive = false;
                     freezeTimeFinished = true;
                 }
             }
         }
 
-        private void StartRoundTimer() { //originally from RoundTimer script. may not look the same but the logic is based from RoundTimer.cs
-            if (currentRound <= maxRound) { //check remaining rounds
+        private void StartRoundTimer() {
+            if (currentRound <= maxRound) {
                 roundTimeFinished = false;
-                currentRoundTime -= Time.deltaTime;
-                //Debug.Log($"Round Timer: {currentRoundTime}");
-                if (currentRoundTime <= 0) { //check if timer reached zero
-                    currentRoundTime = maxRoundTime; //reset timer
-                    isRoundTimerActive = false; //stop countdown
-                    roundTimeFinished = true;
-                    freezeTimeFinished = false;
-                    currentRound++;
+                currentRoundTime -= Time.unscaledDeltaTime;
+                if (currentRoundTime <= 0) {
+                    StopRoundTime();
                 }
             }
         }
-
-
-
-        // public void IncreaseRound() {
-        //     currentRound += 1;
-        // }
-
-        // public void DecreaseCurrentRoundTime() {
-        //     currentRoundTime -= 1;
-        // }
-
-        // public void DecreaseFreezeTime() {
-        //     currentFreezeTime -= 1;
-        // }
-
-        // public void OnGUI() {
-        //     uiManager.SetRoundUI(currentRound);
-        //     uiManager.SetRoundTimeUI(Mathf.RoundToInt(currentRoundTime));
-        //     uiManager.SetFreezeTimeUI(Mathf.RoundToInt(currentFreezeTime));
-        //     uiManager.SetFreezeRoundUI(currentRound);
-        // }
-
-        // public override void OnStartServer() {
-        //     //roundTimer = gameObject.GetComponent<RoundTimer>();
-        //     // freezeTimer = gameObject.GetComponent<FreezeTimer>();
-
-        //     // put inside OnStartServer() of Arbiter()
-        //     // roundManager.StartGame();
-        //     //StartGame(); // remove this if Arbiter() is used to start game.
-        // }
     }
 }
 
