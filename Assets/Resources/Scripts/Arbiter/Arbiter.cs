@@ -14,7 +14,7 @@ namespace RummageBattle {
 
         void Update() {
             //check if players is ready
-
+            //TODO: Add a code to check if all players is ready.
             //start rounds
             if (!roundManager.freezeTimeFinished) {
                 playerManager.FreezePlayers();
